@@ -1,4 +1,4 @@
-module World exposing (World)
+module World exposing (..)
 
 
 type World
