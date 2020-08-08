@@ -37,8 +37,12 @@ type Date
 type Existence
     = Belongs
     | TraveledFrom Date World Episodes
+    | TraveledFrom_ Date
     | TravelsTo Date World Episodes
     | TraveledFromUnknown
+    | TravelsToUnknown
+    | Birth
+    | Death
 
 
 type alias Event =
@@ -54,6 +58,10 @@ type alias Event =
 belongs : Participant -> Participant
 belongs ( id, stage, _ ) =
     ( id, stage, Belongs )
+
+
+throughout : Int -> Date
+throughout = Throughout
 
 
 theyAll : Existence -> List ( PersonId, Stage ) -> Participants
@@ -82,3 +90,7 @@ season s = ( Season s, Nothing )
 
 sep : Int -> Int -> Episodes
 sep s e = ( Season s, Just <| Episode e )
+
+
+changeAge : Stage -> Participant -> Participant
+changeAge s = (\(p, _, e) -> (p, s, e))

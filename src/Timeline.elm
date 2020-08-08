@@ -9,14 +9,17 @@ import Event exposing (..)
 
 type alias Timeline = List Event
 
+travelOfStrangerTeam : Existence
+travelOfStrangerTeam = TraveledFrom (exact 27 Jun 2020) Adam <| sep 2 8
+
 
 strangerTeamFrom2020 : Participants
 strangerTeamFrom2020 =
     [ ( Jonas, Adult )
     , ( Magnus, Teen )
     , ( Franziska, Teen )
-    , ( Bartocz, Teen )
-    ] |> theyAll (TraveledFrom (exact 27 Jun 2020) Adam <| sep 2 8)
+    , ( Bartosz, Teen )
+    ] |> theyAll travelOfStrangerTeam
 
 
 theUnknowns : Participants
@@ -26,6 +29,10 @@ theUnknowns =
     , ( Unknown, Old )
     ] |> theyAll TraveledFromUnknown
 
+
+adamAtStartOf19xx : Participant
+adamAtStartOf19xx =
+    ( Jonas, Old, travelOfStrangerTeam )
 
 
 gustav : Participant
@@ -48,15 +55,23 @@ strangerJonasFrom2020 =
     )
 
 
-y1988 : Timeline
-y1988 =
+siljaFrom2053 : Participant
+siljaFrom2053 =
+    ( Silja
+    , Teen
+    , TraveledFrom_ (throughout 2053)
+    )
+
+
+y1888 : Timeline
+y1888 =
     -- June 27
     [ Event
         Adam
         ( exact 27 Jun 1888 )
         strangerTeamFrom2020
         ( season 3 )
-        "*Stranger-Jonas*, and young *Bartocz*, *Franziska*, and *Magnus* arrive from 2020"
+        "*Stranger-Jonas*, and young *Bartosz*, *Franziska*, and *Magnus* arrive from 2020"
     , Event
         Adam
         ( exact 27 Jun 1888 )
@@ -104,4 +119,101 @@ y1988 =
         )
         ( sep 3 6 )
         "*Adult-Martha-3* travels to 1988 and leaves a new letter on Stranger-Jonas' desk"
+    ]
+
+
+y1890 : Timeline
+y1890 =
+    [ Event
+        Adam
+        ( throughout 1890 )
+        ( [ strangerJonasFrom2020
+          ]
+        )
+        ( sep 3 7 )
+        "Stranger-Jonas continues working on portal"
+    , Event
+        Adam
+        ( throughout 1890 )
+        ( [ strangerJonasFrom2020
+          , siljaFrom2053
+          , ( Bartosz, Adult, travelOfStrangerTeam )
+          ]
+        )
+        ( sep 3 7 )
+        "Bartosz begins to break faith with Jonas and meets *Silja* when she arrives from 2053"
+    ]
+
+
+y1904 : Timeline
+y1904 =
+    [ Event
+        Adam
+        ( throughout 1904 )
+        ( [ siljaFrom2053 |> changeAge Adult
+          , ( Hanno_Noah, Child, Birth )
+          ]
+        )
+        ( sep 3 7 )
+        "Adult-Silja gives birth to a baby boy and names him *Hanno* (aka *Noah*)"
+    ]
+
+
+y1910 : Timeline
+y1910 =
+    [ Event
+        Adam
+        ( throughout 1910 )
+        ( [ siljaFrom2053 |> changeAge Adult
+          , ( Agnes, Child, Birth )
+          ]
+        )
+        ( sep 3 7 )
+        "Adult-Silja gives birth to a baby girl and names her *Agnes*"
+    ]
+
+
+y1911 : Timeline
+y1911 =
+    [ Event
+        Adam
+        ( throughout 1911 )
+        ( [ ( Hannah, Adult, TraveledFromUnknown )
+          , ( Silja, Teen, TraveledFromUnknown )
+          ]
+        )
+        ( sep 3 7 )
+        "Adult-*Hanna* arrives from the future with Young Silja"
+    , Event
+        Adam
+        ( throughout 1911 )
+        ( [ adamAtStartOf19xx
+          , ( Hannah, Adult, Death )
+          ]
+        )
+        ( sep 3 7 )
+        "Stranger-Jonas, who has now become *Adam*, kills adult-Hannah"
+    , Event
+        Adam
+        ( throughout 1911 )
+        ( [ adamAtStartOf19xx
+          , ( Silja, Child, TravelsToUnknown )
+          ]
+        )
+        ( sep 3 7 )
+        "Stranger-Jonas, who has now become *Adam*, sends Silja to the future with the working time portal"
+    ]
+
+
+y1920 : Timeline
+y1920 =
+    [ Event
+        Adam
+        ( throughout 1910 )
+        ( [ adamAtStartOf19xx
+          , ( Hanno_Noah, Adult, TraveledFrom (throughout 2040) Adam <| sep 3 7 )
+          ]
+        )
+        ( sep 3 7 )
+        "Adult-*Noah* arrives from 2040 and starts working for Adam"
     ]
