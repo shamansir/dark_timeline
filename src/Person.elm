@@ -22,6 +22,17 @@ type PersonId
     | Hanno_Noah
     | Agnes
     | Hannah
+    | Claudia
+    | Helge
+    | Ulrich
+    | Yasin
+    | Erik
+    | Egon
+    | Tronte
+    | Doris
+    | Gretchen
+    | Bernd
+    | HGTannhaus
 
 
 type alias Person = ( PersonId, Stage )
