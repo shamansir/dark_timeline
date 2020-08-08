@@ -22,6 +22,9 @@ type alias Day = Int
 type alias Participant = ( PersonId, Stage, Existence )
 
 
+type alias Episodes = ( Season, Maybe Episode )
+
+
 type alias Participants = List Participant
 
 
@@ -33,7 +36,9 @@ type Date
 
 type Existence
     = Belongs
-    | TraveledFrom Date World
+    | TraveledFrom Date World Episodes
+    | TravelsTo Date World Episodes
+    | TraveledFromUnknown
 
 
 type alias Event =
@@ -41,11 +46,39 @@ type alias Event =
     , date : Date
     , participants : Participants
     -- , connections : List Event
-    , episode : ( Season, Maybe Episode )
+    , episode : Episodes
     , description : String
     }
 
 
 belongs : Participant -> Participant
-belongs ( id, stage, exist ) =
+belongs ( id, stage, _ ) =
     ( id, stage, Belongs )
+
+
+theyAll : Existence -> List ( PersonId, Stage ) -> Participants
+theyAll = List.map << addExistense
+
+
+theyAll_ : Existence -> Participants -> Participants
+theyAll_ = List.map << changeExistense
+
+
+changeExistense : Existence -> Participant -> Participant
+changeExistense e = (\(p, s, _) -> (p, s, e))
+
+
+addExistense : Existence -> ( PersonId, Stage ) -> Participant
+addExistense e = (\(p, s) -> (p, s, e))
+
+
+exact : Day -> Month -> Year -> Date
+exact d m y = Exact ( d, m, y )
+
+
+season : Int -> Episodes
+season s = ( Season s, Nothing )
+
+
+sep : Int -> Int -> Episodes
+sep s e = ( Season s, Just <| Episode e )

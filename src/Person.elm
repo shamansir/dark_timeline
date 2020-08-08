@@ -3,7 +3,7 @@ module Person exposing (..)
 
 type Stage
     = Child
-    | Young
+    | Teen
     | Adult
     | Old
 
@@ -11,10 +11,13 @@ type Stage
 type PersonId
     = Jonas
     | Martha
+    | Martha_2
+    | Martha_3
     | Bartocz
     | Franziska
     | Magnus
     | Gustav
+    | Unknown
 
 
 type alias Person = ( PersonId, Stage )
