@@ -19,6 +19,12 @@ type alias Year = Int
 type alias Day = Int
 
 
+type alias Participant = ( PersonId, Stage, Existence )
+
+
+type alias Participants = List Participant
+
+
 type Date
     = Exact ( Day, Month, Year )
     | Someday Month Year
@@ -33,8 +39,13 @@ type Existence
 type alias Event =
     { world : World
     , date : Date
-    , participants : List ( PersonId, Stage, Existence )
+    , participants : Participants
     -- , connections : List Event
     , episode : ( Season, Maybe Episode )
     , description : String
     }
+
+
+belongs : Participant -> Participant
+belongs ( id, stage, exist ) =
+    ( id, stage, Belongs )
