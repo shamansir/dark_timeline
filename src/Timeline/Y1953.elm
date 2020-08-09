@@ -12,6 +12,7 @@ import Timeline.Def exposing (..)
 
 y1953 : Timeline
 y1953 =
+
     [ Event
         Adam
         ( throughout 1953 )
@@ -20,7 +21,9 @@ y1953 =
         )
         ( sep 2 2 )
         "Old Claudia buries the suitcase with the time machine in her own future backyard"
-    -- Nov 9
+
+    {- Nov 9 -}
+
     , Event
         Adam
         ( exact 9 Nov 1953 )
@@ -30,7 +33,9 @@ y1953 =
         )
         ( sep 1 8 )
         "Adult-Helge takes Yasin's body out of the bunker and drops it at construction site"
-    -- Nov 10
+
+    {- Nov 10 -}
+
     , Event
         Adam
         ( exact 10 Nov 1953 )
@@ -39,6 +44,7 @@ y1953 =
         )
         ( sep 1 8 )
         "Adult-Ulrich arrives from 2019 after entering the caves"
+
     , Event
         Adam
         ( exact 10 Nov 1953 )
@@ -47,6 +53,7 @@ y1953 =
         )
         ( sep 1 8 )
         "Egon investigates the boy's murders"
+
     , Event
         Adam
         ( exact 10 Nov 1953 )
@@ -58,6 +65,7 @@ y1953 =
         )
         ( sep 1 8 )
         "Adult-Agnes and her son Tronte arrive in Winden and start living with Egon, young-Claudia and Doris"
+
     , Event
         Adam
         ( exact 10 Nov 1953 )
@@ -66,6 +74,7 @@ y1953 =
         )
         ( sep 1 8 )
         "Gretchen the poodle gets lost inside the Winden caves"
+
     , Event
         Adam
         ( exact 10 Nov 1953 )
@@ -74,6 +83,7 @@ y1953 =
         )
         ( sep 1 8 )
         "Bernd picthes the power plant to local investors and the government"
+
     , Event
         Adam
         ( exact 10 Nov 1953 )
@@ -83,6 +93,7 @@ y1953 =
         )
         ( sep 1 8 )
         "Adult-Ulrich visits H.G.Tannhaus"
+
     , Event
         Adam
         ( exact 10 Nov 1953 )
@@ -92,6 +103,7 @@ y1953 =
         )
         ( sep 1 8 )
         "Adult-Ulrich attacks young-Helge, scarring his face and ear, and leaves him in the bunker"
+
     , Event
         Adam
         ( exact 10 Nov 1953 )
@@ -101,6 +113,7 @@ y1953 =
         )
         ( sep 1 8 )
         "Tannhaus finds Ulrich's cell phone and keeps it"
+
     , Event
         Adam
         ( exact 10 Nov 1953 )
@@ -109,7 +122,9 @@ y1953 =
         )
         ( sep 1 9 )
         "Adult Ulrich is arrested and imprisoned"
-    -- Nov 11
+
+    {- Nov 11 -}
+
     , Event
         Adam
         ( exact 11 Nov 1953 )
@@ -119,7 +134,9 @@ y1953 =
         )
         ( sep 1 9 )
         "Old-Claudia visits Tannhaus and gives him the blueprint for the time machine"
-    -- Nov 12
+
+    {- Nov 12 -}
+
     , Event
         Adam
         ( exact 12 Nov 1953 )
@@ -129,6 +146,7 @@ y1953 =
         )
         ( sep 1 10 )
         "Helge sees the wormhole in the bunker and reaches to touch Jonas"
+
     , Event
         Adam
         ( exact 12 Nov 1953 )

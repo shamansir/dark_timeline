@@ -21,6 +21,7 @@ y1911 =
         )
         ( sep 3 7 )
         "Adult-Hanna arrives from the future with Young Silja"
+
     , Event
         Adam
         ( throughout 1911 )
@@ -30,6 +31,7 @@ y1911 =
         )
         ( sep 3 7 )
         "Stranger-Jonas, who has now become Adam, kills adult-Hannah"
+
     , Event
         Adam
         ( throughout 1911 )
@@ -39,6 +41,7 @@ y1911 =
         )
         ( sep 3 7 )
         "Stranger-Jonas, who has now become Adam, sends Silja to the future with the working time portal"
+
     ]
 
 

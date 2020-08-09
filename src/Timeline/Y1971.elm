@@ -12,6 +12,9 @@ import Timeline.Def exposing (..)
 
 y1971 : Timeline
 y1971 =
+
+    {- Aug 8 -}
+
     [ Event
         Origin_1
         ( exact 8 Aug 1971 )
@@ -23,6 +26,7 @@ y1971 =
         )
         ( sep 3 7 )
         "In one reality, Marek, Sonja and baby Charlotte have an argue with Tannhaus"
+
     , Event
         Origin_1
         ( exact 8 Aug 1971 )
@@ -33,6 +37,7 @@ y1971 =
         )
         ( sep 3 7 )
         "In one reality, Marek, Sonja and baby Charlotte die in a car accident"
+
     , Event
         Origin_2
         ( exact 8 Aug 1971 )
@@ -46,6 +51,7 @@ y1971 =
         )
         ( sep 3 8 )
         "In new reality, Jonas and Martha-2 convince Marek to drive back to the clock shop, saving their lives"
+
     , Event
         Origin_2
         ( exact 8 Aug 1971 )
@@ -55,6 +61,7 @@ y1971 =
         )
         ( sep 3 8 )
         "Jonas and Martha-2 both die/disappear following the conversation"
+
     ]
 
 

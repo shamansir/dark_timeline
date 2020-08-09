@@ -12,7 +12,9 @@ import Timeline.Def exposing (..)
 
 y1954 : Timeline
 y1954 =
-    -- Jun 23
+
+    {- Jun 23 -}
+
     [ Event
         Adam
         ( exact 23 Jun 1954 )
@@ -21,6 +23,7 @@ y1954 =
         )
         ( sep 2 3 )
         "Noah uses the time-bunker maching in 1986 to send Helge back home to 1954"
+
     , Event
         Adam
         ( exact 23 Jun 1954 )
@@ -30,6 +33,7 @@ y1954 =
         )
         ( sep 2 3 )
         "Doris and Agnes continue having an affair"
+
     , Event
         Adam
         ( exact 23 Jun 1954 )
@@ -38,6 +42,7 @@ y1954 =
         )
         ( sep 2 3 )
         "Adult-Noah arrives back in 1954 after time travelling from 1987"
+
     , Event
         Adam
         ( exact 23 Jun 1954 )
@@ -48,6 +53,7 @@ y1954 =
         )
         ( sep 2 3 )
         "Agnes tells adult-Noah that old-Claudia has the missing pages from the Trinity notebook"
+
     , Event
         Adam
         ( exact 23 Jun 1954 )
@@ -57,6 +63,7 @@ y1954 =
         )
         ( sep 2 3 )
         "Old-Claudia visits Egon at the police station and tells him she's sorry"
+
     , Event
         Adam
         ( exact 23 Jun 1954 )
@@ -66,6 +73,7 @@ y1954 =
         )
         ( sep 2 3 )
         "Old-Claudia visits Tannhaus and gives him the 'A Jorney Through Time' book (so he can write it)"
+
     , Event
         Adam
         ( exact 23 Jun 1954 )
@@ -75,6 +83,7 @@ y1954 =
         )
         ( sep 2 3 )
         "Adult-Noah kills Old-Claudia and takes the missing notebook pages"
+
     , Event
         Adam
         ( exact 23 Jun 1954 )
@@ -83,7 +92,9 @@ y1954 =
         )
         ( sep 2 3 )
         "Noah realizes that Adam lied and travels back to kill him"
-    -- Jun 26
+
+    {- Jun 26 -}
+
     , Event
         Adam
         ( exact 26 Jun 1954 )
@@ -92,6 +103,7 @@ y1954 =
         )
         ( sep 2 7 )
         "Old-Claudia's corpse is examined by a mortician"
+
     , Event
         Adam
         ( exact 26 Jun 1954 )
@@ -102,6 +114,7 @@ y1954 =
         )
         ( sep 2 7 )
         "Hannah arrives from 2020 and goes to Egon to ask to see Ulrich"
+
     , Event
         Adam
         ( exact 26 Jun 1954 )
@@ -111,6 +124,7 @@ y1954 =
         )
         ( sep 2 7 )
         "Hannah visits Ulrich, but leaves him imprisoned and denies knowing him"
+
     , Event
         Adam
         ( exact 26 Jun 1954 )
@@ -121,6 +135,7 @@ y1954 =
         )
         ( sep 2 7 )
         "Hannah assumes the identity of 'Katharina Nielsen' and begins the affair with Egon, chosing to stay in the past"
+
     , Event
         Adam
         ( exact 26 Jun 1954 )
@@ -131,7 +146,9 @@ y1954 =
         )
         ( sep 2 7 )
         "Agnes time-travels, leaving Tronte and Doris without an explanation"
-    -- Sep 24
+
+    {- Sep 24 -}
+
     , Event
         Adam
         ( exact 24 Sep 1954 )
@@ -139,6 +156,7 @@ y1954 =
         )
         ( sep 3 4 )
         "The Unknowns give Tronte the silver snake bracelet"
+
     , Event
         Adam
         ( exact 24 Sep 1954 )
@@ -148,6 +166,7 @@ y1954 =
         )
         ( sep 3 4 )
         "Egon and Hannah continue their affair and he gives her the St.Christopher necklace"
+
     , Event
         Adam
         ( exact 24 Sep 1954 )
@@ -157,6 +176,7 @@ y1954 =
         )
         ( sep 3 4 )
         "Hannah learns she's pregnant with Egon's baby"
+
     , Event
         Adam
         ( exact 24 Sep 1954 )
@@ -164,6 +184,7 @@ y1954 =
         )
         ( sep 3 4 )
         "The Unknowns coerce a goverment official into giving Bernd the building permits for the nuclear power plant"
+
     , Event
         Adam
         ( exact 24 Sep 1954 )
@@ -174,6 +195,7 @@ y1954 =
         )
         ( sep 3 4 )
         "Hannah goes to Fran Obendorf's for an abortion and meets young Helene Albers"
+
     , Event
         Adam
         ( exact 24 Sep 1954 )
@@ -184,6 +206,7 @@ y1954 =
         )
         ( sep 3 4 )
         "Hannah gives Helene Albers the idea for the name Katharina and leaves her the St.Christopher necklace"
+
     , Event
         Adam
         ( exact 24 Sep 1954 )

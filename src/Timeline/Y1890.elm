@@ -12,6 +12,7 @@ import Timeline.Def exposing (..)
 
 y1890 : Timeline
 y1890 =
+
     [ Event
         Adam
         ( throughout 1890 )
@@ -20,6 +21,7 @@ y1890 =
         )
         ( sep 3 7 )
         "Stranger-Jonas continues working on portal"
+
     , Event
         Adam
         ( throughout 1890 )
@@ -30,4 +32,5 @@ y1890 =
         )
         ( sep 3 7 )
         "Bartosz begins to break faith with Jonas and meets Silja when she arrives from 2053"
+
     ]

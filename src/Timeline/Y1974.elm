@@ -12,6 +12,7 @@ import Timeline.Def exposing (..)
 
 y1974 : Timeline
 y1974 =
+
     [ Event
         Origin_1
         ( throughout 1974 )

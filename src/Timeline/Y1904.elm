@@ -12,6 +12,7 @@ import Timeline.Def exposing (..)
 
 y1904 : Timeline
 y1904 =
+
     [ Event
         Adam
         ( throughout 1904 )
