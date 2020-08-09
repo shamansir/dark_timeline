@@ -33,6 +33,9 @@ type PersonId
     | Gretchen
     | Bernd
     | HGTannhaus
+    | Katharina
+    | Helene
+    | FObendorf -- Fran? Obendorf
 
 
 type alias Person = ( PersonId, Stage )
