@@ -5,7 +5,7 @@ import Time exposing (..)
 import Person exposing (..)
 import Event exposing (..)
 
-import Timeline.Helpers exposing (..)
+import Timeline.Def exposing (..)
 
 
 {- 1987 -}

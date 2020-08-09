@@ -1,4 +1,4 @@
-module Timeline.Helpers exposing (..)
+module Timeline.Def exposing (..)
 
 
 import Time exposing (..)
