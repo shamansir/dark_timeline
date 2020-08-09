@@ -62,7 +62,7 @@ y1953 =
     , Event
         Adam
         ( exact 10 Nov 1953 )
-        ( [ ( Gretchen, Adult, Belongs )
+        ( [ ( Gretchen, Poodle, Belongs )
           ]
         )
         ( sep 1 8 )
@@ -125,8 +125,7 @@ y1953 =
         Adam
         ( exact 12 Nov 1953 )
         ( [ ( Helge, Teen, Belongs )
-          , ( Jonas, Teen, from12Nov1986 )
-          -- ? , ( Jonas, Teen, from12Nov2019 )
+          , ( Jonas, Teen, Wormhole )
           ]
         )
         ( sep 1 10 )

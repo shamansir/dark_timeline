@@ -6,10 +6,12 @@ type Stage
     | Teen
     | Adult
     | Old
+    | Poodle
 
 
 type PersonId
-    = Jonas
+    = Unknown
+    | Jonas
     | Martha
     | Martha_2
     | Martha_3
@@ -17,7 +19,6 @@ type PersonId
     | Franziska
     | Magnus
     | Gustav
-    | Unknown
     | Silja
     | Hanno_Noah
     | Agnes
@@ -36,6 +37,13 @@ type PersonId
     | Katharina
     | Helene
     | FObendorf -- Fran? Obendorf
+    | Marek
+    | Sonja
+    | Charlotte
+    | Mikkel
+    | Ines
+    | Boris_Aleksander
+    | Regina
 
 
 type alias Person = ( PersonId, Stage )

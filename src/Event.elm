@@ -41,6 +41,7 @@ type Existence
     | TravelsTo Date World Episodes
     | TraveledFromUnknown
     | TravelsToUnknown
+    | Wormhole
     | Birth
     | Death
 
