@@ -64,19 +64,23 @@ siljaFrom2053 =
 
 
 from10Nov1953 : Existence
-from10Nov1953 = TraveledFrom (exact 10 Nov 1953 ) Adam <| sep 1 8
+from10Nov1953 = TraveledFrom (exact 10 Nov 1953) Adam <| sep 1 8
+
+
+to12Nov1953 : Existence
+to12Nov1953 = TravelsTo (exact 12 Nov 1953) Adam <| sep 2 3
 
 
 from12Nov1986 : Existence
-from12Nov1986 = TraveledFrom (exact 12 Nov 1986 ) Adam <| sep 1 10
+from12Nov1986 = TraveledFrom (exact 12 Nov 1986) Adam <| sep 1 10
 
 
 to12Nov1986 : Existence
-to12Nov1986 = TravelsTo (exact 12 Nov 1986 ) Adam <| sep 1 10
+to12Nov1986 = TravelsTo (exact 12 Nov 1986) Adam <| sep 1 10
 
 
 from23Jun1987 : Existence
-from23Jun1987 = TraveledFrom (exact 23 Jun 1987 ) Adam <| sep 2 3
+from23Jun1987 = TraveledFrom (exact 23 Jun 1987) Adam <| sep 2 3
 
 
 to23Jun1921 : Existence

@@ -40,7 +40,10 @@ type Existence
     | TraveledFrom_ Date
     | TravelsTo Date World Episodes
     | TraveledFromUnknown
+    | TraveledFromUnknown_ Year
     | TravelsToUnknown
+    | TravelsToUnknown_ Year
+    | Missing
     | Wormhole
     | Birth
     | Death
