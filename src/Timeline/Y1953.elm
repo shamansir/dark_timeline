@@ -2,7 +2,6 @@ module Timeline.Y1953 exposing (y1953)
 
 
 import Time exposing (..)
-import World exposing (..)
 import Person exposing (..)
 import Event exposing (..)
 

@@ -3,8 +3,14 @@ module Event exposing (..)
 
 import Time exposing (Month)
 
-import World exposing (..)
 import Person exposing (..)
+
+
+type World
+    = Origin_1 -- car accident happens
+    | Origin_2 -- car accident doesn't happen
+    | Adam
+    | Eva
 
 
 type Episode = Episode Int
