@@ -50,6 +50,34 @@ type PersonId
     | Killian
     | Jurgen
     | Ulla
+    | Benjamin
 
 
 type alias Person = ( PersonId, Stage )
+
+
+type Name
+    = Nickname String
+    | Full String String
+
+
+names : PersonId -> List Name
+names person =
+    case person of
+        Unknown -> [ Nickname "Unknown" ]
+        Jonas -> [ Full "Jonas" "Kahnwald", Nickname "Adam" ]
+        Martha -> [ Full "Martha" "Nielsen" ]
+        Martha_2 -> [ Full "Martha" "Nielsen", Nickname "Eve" ]
+        Martha_3 -> [ Full "Martha" "Nielsen", Nickname "Eve" ]
+        Benjamin -> [ Full "Benjamin" "Wöller", Full "Bernandette" "Wöller" ]
+        Mikkel -> [ Full "Michael" "Kahnwald", Full "Mikkel" "Nielsen" ]
+        Boris_Aleksander ->
+            [ Full "Boris" "Niewald"
+            , Full "Alexander" "Köhler"
+            , Full "Alexander" "Tiedemann"
+            ]
+        Hanno_Noah ->
+            [ Full "Hanno" "Tauber"
+            , Nickname "Noah"
+            ]
+        _ -> []
