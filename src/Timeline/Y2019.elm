@@ -286,6 +286,202 @@ y2019 =
         ( sep 1 2 )
         "Aleksander has barrels of the radioactive material loaded into an off-site truck"
 
+    {- Nov 6 -}
+
+    , Event
+        Eva
+        ( exact 6 Nov 2019 )
+        ( [ ( Jonas, Teen, TraveledFromUnknown )
+          , ( Martha_2, Teen, TraveledFromUnknown )
+          ]
+        )
+        ( sep 3 5 )
+        "Jonas and Martha-2 head to the power plant and she cuts her cheek"
+
+    , Event
+        Eva
+        ( exact 6 Nov 2019 )
+        ( [ ( Jonas, Teen, TravelsToUnknown )
+          , ( Martha_2, Teen, TravelsToUnknown )
+          ]
+        )
+        ( sep 3 5 )
+        "Jonas sees the Martha-2 cut and instead brings Martha-2 to Eva"
+
+    , Event
+        Eva
+        ( exact 6 Nov 2019 )
+        ( [ ( Martha_3, Old, to6Nov2052 )
+          , ( Martha_3, Teen, to6Nov2052 )
+          , ( Jonas, Teen, Death )
+          ]
+        )
+        ( sep 3 5 )
+        "Eva has Martha-3 shoot and kill Jonas and then they travel to 2052"
+
+    {- Nov 7 -}
+
+    , Event
+        Eva
+        ( exact 7 Nov 2019 )
+        ( [ ( Martha_2, Teen, TravelsToUnknown_ 2053 )
+          , ( Magnus, Adult, TravelsToUnknown_ 2053 )
+          , ( Franziska, Adult, TravelsToUnknown_ 2053 )
+          ]
+        )
+        ( sep 3 6 )
+        "Martha-2 tries to prevent the Apocalypse but is intercepted by adult-Magnus and adult Franziska and brought to Adam in 2053 (World one)"
+
+    , Event
+        Eva
+        ( exact 7 Nov 2019 )
+        ( [ ( Bartosz, Adult, Belongs )
+          , ( Bartosz, Teen, Belongs )
+          ]
+        )
+        ( sep 3 6 )
+        "Adult-Bartosz from World Two intercepts young-Bartosz from World Two, bringing him to work with Eva"
+
+    , Event
+        Eva
+        ( exact 7 Nov 2019 )
+        ( [
+          ]
+        )
+        ( sep 3 6 )
+        "The Apocalypse happens in World Two"
+
+    , Event
+        Adam
+        ( exact 7 Nov 2019 )
+        ( [ ( Yasin, Child, TravelsToUnknown_ 1986 )
+          , ( Helge, Adult, Belongs  )
+          ]
+        )
+        ( sep 1 4 )
+        "Yasin is kidnapped by Helge and taken to the bunker in 1986"
+
+    , Event
+        Adam
+        ( exact 7 Nov 2019 )
+        ( [ ( Hanno_Noah, Adult, TraveledFromUnknown )
+          , ( Bartosz, Teen, Belongs  )
+          ]
+        )
+        ( sep 1 5 )
+        "Adult-Noah makes contact with young-Bartosz for the first time"
+
+    {- Nov 8 -}
+
+    , Event
+        Adam
+        ( exact 8 Nov 2019 )
+        ( [ ( Jonas, Teen, Join to8Nov1986 from8Nov1986 )
+          ]
+        )
+        ( sep 1 6 )
+        "Jonas finds the passageway in the caves for the first time and then travels to 1986 and then back"
+
+    , Event
+        Adam
+        ( exact 8 Nov 2019 )
+        ( [ ( Ulrich, Adult, Belongs )
+          , ( Mads, Child, Death )
+          ]
+        )
+        ( sep 1 7 )
+        "Ulrich realizes the body from the forest was Mads"
+
+    , Event
+        Adam
+        ( exact 8 Nov 2019 )
+        ( [ ( Charlotte, Adult, Belongs )
+          ]
+        )
+        ( sep 1 7 )
+        "Charlotte continues the investigation and searches the power plant and bunker"
+
+    , Event
+        Adam
+        ( exact 8 Nov 2019 )
+        ( [ ( Ulrich, Adult, to8Nov1953 )
+          , ( Helge, Child, to8Nov1953 )
+          ]
+        )
+        ( sep 1 8 )
+        "Ulrich follows Helge to travel to 1953"
+
+    {- Nov 11 -}
+
+    , Event
+        Adam
+        ( exact 11 Nov 2019 )
+        ( [ ( Claudia, Old, TraveledFromUnknown )
+          , ( Bartosz, Teen, Belongs )
+          ]
+        )
+        ( sep 1 9 )
+        "Old Claudia visits young-Bartosz for the first time"
+
+    , Event
+        Adam
+        ( exact 11 Nov 2019 )
+        ( [ ( Jonas, Teen, Belongs )
+          , ( Martha, Teen, Belongs )
+          ]
+        )
+        ( sep 1 9 )
+        "Jonas tries to end things with Martha after learning she's his aunt"
+
+    , Event
+        Adam
+        ( exact 11 Nov 2019 )
+        ( [ ( Jonas, Adult, TraveledFromUnknown )
+          , ( Boris_Aleksander, Adult, Belongs )
+          ]
+        )
+        ( sep 1 9 )
+        "Strabger-Jonas takes some of the radioactive material from the truck Aleksander had hidden"
+
+    {- Nov 12 -}
+
+    , Event
+        Adam
+        ( exact 12 Nov 2019 )
+        ( [ ( Jonas, Teen, Join to12Nov1986 <| Join Wormhole to12Nov2052 )
+          ]
+        )
+        ( sep 1 10 )
+        "Jonas goes back through the cave passageway to 1986, where he'll be sent to 2052 through wormhole in the bunker"
+
+    , Event
+        Adam
+        ( exact 12 Nov 2019 )
+        ( [ ( Charlotte, Adult, Belongs )
+          ]
+        )
+        ( sep 1 10 )
+        "Charlotte finds the photo of Ulrich in the 1953 newspaper records"
+
+    , Event
+        Adam
+        ( exact 12 Nov 2019 )
+        ( [ ( Peter, Adult, Belongs )
+          , ( Charlotte, Adult, Belongs )
+          ]
+        )
+        ( sep 1 10 )
+        "Peter decides to tell Charlotte about time travel"
+
+    , Event
+        Adam
+        ( exact 12 Nov 2019 )
+        ( [ ( Jonas, Adult, Wormhole )
+          ]
+        )
+        ( sep 1 10 )
+        "Stranger-Jonas tries to destroy the cave passageway with the time machine, but instead creates the wormhole"
+
     ]
 
 

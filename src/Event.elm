@@ -49,6 +49,7 @@ type Existence
     | TraveledFromUnknown_ Year
     | TravelsToUnknown
     | TravelsToUnknown_ Year
+    | Join Existence Existence
     | Missing
     | Wormhole
     | Birth
