@@ -150,6 +150,10 @@ theWormhole : Existence
 theWormhole = Wormhole -- == from27Jun2020?
 
 
+to4Nov2019 : Existence
+to4Nov2019 = TravelsTo (exact 4 Nov 2019) Eva <| sep 2 8
+
+
 from4Nov2019 : Existence
 from4Nov2019 = TraveledFrom (exact 4 Nov 2019) Adam <| sep 1 1
 

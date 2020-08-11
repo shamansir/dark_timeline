@@ -269,4 +269,64 @@ y2020 =
         ( sep 2 8 )
         "Charlotte sees adult-Elisabeth through the wormhole, and reaches to touch her, transporting herself to 2053"
 
+    , Event
+        Adam
+        ( exact 27 Jun 2020 )
+        ( [ ( Jonas, Old, TraveledFromUnknown_ 1921 ) -- FIXME: we know wherefrom?
+          , ( Martha, Teen, Death )
+          ]
+        )
+        ( sep 2 8 )
+        "Adam arrives from 1921 and kills Martha"
+
+    , Event
+        Adam
+        ( exact 27 Jun 2020 )
+        ( [ ( Jonas, Teen, to4Nov2019 )
+          , ( Martha_2, Teen, to4Nov2019 )
+          ]
+        )
+        ( sep 2 8 )
+        "First reality: Martha-2 arrives in Jonas' world and uses her own time machine to bring them to November 4, 2019, in World Two"
+
+    , Event
+        Adam
+        ( exact 27 Jun 2020 )
+        ( [ ( Jonas, Teen, Belongs )
+          , ( Claudia, Adult, Belongs )
+          ]
+        )
+        ( sep 3 6 )
+        "From killing Martha by Adam, a second reality forms where Jonas simply hides in the basement and survives on his own, eventually pairing up with Claudia and becoming Stranger-Jonas"
+
+    , Event
+        Adam
+        ( exact 27 Jun 2020 )
+        ( [ ( Martha_2, Teen, TraveledFromUnknown ) -- FIXME: we know wherefrom?
+          , ( Bartosz, Teen, Belongs ) -- FIXME: this Bartosz is from the spin-world
+          , ( Martha_3, Old, TraveledFromUnknown )  -- FIXME: we know where she is?
+          ]
+        )
+        ( sep 3 7 )
+        "In the second reality formed From killing Martha by Adam, Martha-2 is intercepted by Bartosz-2 and brought to Eva, making her Martha-3"
+
+    , Event
+        Adam
+        ( exact 27 Jun 2020 )
+        ( [ ( Jonas, Teen, Belongs ) -- FIXME: travels to origin world
+          , ( Jonas, Old, TraveledFromUnknown_ 1921 ) -- FIXME: we know wherefrom?
+          ]
+        )
+        ( sep 3 8 )
+        "In a third reality, formed after the killing of Martha by Adam, Adam saves Jonas and explains how he needs to him to travel to the origin world and save Tannhaus family"
+
+    , Event
+        Adam
+        ( exact 27 Jun 2020 )
+        ( [
+          ]
+        )
+        ( sep 2 8 )
+        "The apocalypse happens in world one"
+
     ]
