@@ -54,6 +54,8 @@ type PersonId
     | Peter
     | Benni
     | Torben
+    | Clausen
+    | Elisabeth
 
 
 type alias Person = ( PersonId, Stage )

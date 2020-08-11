@@ -62,6 +62,18 @@ siljaFrom2053 =
     )
 
 
+to27Jun1888 : Existence
+to27Jun1888 = TravelsTo (exact 27 Jun 1888) Adam <| sep 2 8
+
+
+to21Sep1888 : Existence
+to21Sep1888 = TravelsTo (exact 21 Sep 1888) Adam <| sep 3 3
+
+
+from21Jun1921 : Existence
+from21Jun1921 = TraveledFrom (exact 21 Jun 1921) Adam <| sep 2 1
+
+
 to8Nov1953 : Existence
 to8Nov1953 = TravelsTo (exact 8 Nov 1953) Adam <| sep 1 8
 
@@ -74,8 +86,8 @@ to12Nov1953 : Existence
 to12Nov1953 = TravelsTo (exact 12 Nov 1953) Adam <| sep 2 3
 
 
-to21Sep1888 : Existence
-to21Sep1888 = TravelsTo (exact 21 Sep 1888) Adam <| sep 3 3
+to26Jun1954 : Existence
+to26Jun1954 = TravelsTo (exact 26 Jun 1954) Adam <| sep 2 7
 
 
 to5Nov1986 : Existence
@@ -94,16 +106,24 @@ from12Nov1986 : Existence
 from12Nov1986 = TraveledFrom (exact 12 Nov 1986) Adam <| sep 1 10
 
 
+to23Jun1921 : Existence
+to23Jun1921 = TravelsTo (exact 23 Jun 1921) Adam <| sep 2 3
+
+
 to12Nov1986 : Existence
 to12Nov1986 = TravelsTo (exact 12 Nov 1986) Adam <| sep 1 10
 
 
+to21Jun1987 : Existence
+to21Jun1987 = TravelsTo (exact 21 Jun 1921) Adam <| sep 2 2
+
+
+to27Jun1987 : Existence
+to27Jun1987 = TravelsTo (exact 27 Jun 1921) Adam <| sep 2 8
+
+
 from23Jun1987 : Existence
 from23Jun1987 = TraveledFrom (exact 23 Jun 1987) Adam <| sep 2 3
-
-
-to23Jun1921 : Existence
-to23Jun1921 = TravelsTo (exact 23 Jun 1921) Adam <| sep 2 3
 
 
 from23Jun1954 : Existence

@@ -54,6 +54,7 @@ type Existence
     | Wormhole
     | Birth
     | Death
+    -- TODO: With TimeMachine or Caves or Wormhole
 
 
 type alias Event =
