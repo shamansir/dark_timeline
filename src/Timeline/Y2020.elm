@@ -329,4 +329,92 @@ y2020 =
         ( sep 2 8 )
         "The apocalypse happens in world one"
 
+    {- Sep 22 -}
+
+    , Event
+        Adam
+        ( exact 22 Sep 2020 )
+        ( [ ( Regina, Adult, Belongs )
+          , ( Claudia, Adult, Belongs )
+          ]
+        )
+        ( sep 3 2 )
+        "Claudia is living in the abandoned police station with Regina"
+
+    , Event
+        Adam
+        ( exact 22 Sep 2020 )
+        ( [ ( Peter, Adult, Belongs )
+          , ( Elisabeth, Teen, Belongs )
+          , ( Benni, Adult, Death ) -- Death?
+          , ( Charlotte, Adult, TravelsToUnknown ) -- Unknown?
+          , ( Franziska, Adult, TravelsToUnknown ) -- Unknown?
+          ]
+        )
+        ( sep 3 2 )
+        "Peler and Elisabeth are living in Benni's old trailer searching for Charlotte and Franziska among the reports of the dead bodied found"
+
+    , Event
+        Adam
+        ( exact 22 Sep 2020 )
+        ( [ ( Tronte, Old, to22Sep2020 )
+          , ( Regina, Old, Death )
+          ]
+        )
+        ( sep 3 2 )
+        "Old-Tronte travels to 2020 and kills Regina on Old-Claudia's orders"
+
+    {- Sep 23 -}
+
+    , Event
+        Adam
+        ( exact 23 Sep 2020 )
+        ( [ ( Claudia_2, Old, Belongs )
+          , ( Claudia, Old, TraveledFromUnknown )
+          ]
+        )
+        ( sep 3 5 )
+        "Claudia-2 (from World Two) visits Claudia and gives her the brand new Trinity notebook"
+
+    , Event
+        Adam
+        ( exact 23 Sep 2020 )
+        ( [ ( Claudia, Old, TraveledFromUnknown )
+          ]
+        )
+        ( sep 3 5 )
+        "Claudia begins working for Eva and ensuring the cycle of events stays the same"
+
+    , Event
+        Adam
+        ( exact 23 Sep 2020 )
+        ( [ ( Elisabeth, Teen, Belongs )
+          , ( Peter, Adult, Death )
+          ]
+        )
+        ( sep 3 5 )
+        "Elisabeth is attacked by a stranger, who kills Peter before Elisabeth kills him"
+
+    , Event
+        Adam
+        ( exact 23 Sep 2020 )
+        ( [ ( Elisabeth, Teen, Belongs )
+          , ( Hanno_Noah, Teen, Belongs ) -- Belongs?
+          ]
+        )
+        ( sep 3 5 )
+        "Elisabeth goes to live with young-Noah in the caves"
+
+     {- Sep 24 -}
+
+    , Event
+        Adam
+        ( exact 23 Sep 2020 )
+        ( [ ( Claudia, Adult, Belongs )
+          , ( Jonas, Teen, Belongs )
+          ]
+        )
+        ( sep 3 6 )
+        "Claudia goes to the power plant, where Jonas finds her and starts working with her to try and turn the God Particle into a time travel portal"
+
     ]

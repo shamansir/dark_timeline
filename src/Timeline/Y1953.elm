@@ -128,7 +128,7 @@ y1953 =
     , Event
         Adam
         ( exact 11 Nov 1953 )
-        ( [ ( Claudia, Old, TraveledFromUnknown )
+        ( [ ( Claudia, Old, from2040 )
           , ( HGTannhaus, Adult, Belongs )
           ]
         )

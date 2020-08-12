@@ -82,6 +82,10 @@ from10Nov1953 : Existence
 from10Nov1953 = TraveledFrom (exact 10 Nov 1953) Adam <| sep 1 8
 
 
+to11Nov1953 : Existence
+to11Nov1953 = TravelsTo (exact 11 Nov 1953) Adam <| sep 1 9
+
+
 to12Nov1953 : Existence
 to12Nov1953 = TravelsTo (exact 12 Nov 1953) Adam <| sep 2 3
 
@@ -171,7 +175,11 @@ from12Nov2019 = TraveledFrom (exact 12 Nov 2019) Adam <| sep 1 10
 
 
 from2040 : Existence
-from2040 = TraveledFrom (throughout 2040) Adam <| sep 3 7
+from2040 = TraveledFrom (throughout 2040) Eva <| sep 3 7
+
+
+to22Sep2020 : Existence
+to22Sep2020 = TravelsTo (exact 20 Sep 2020) Adam <| sep 3 2
 
 
 to12Nov2052 : Existence

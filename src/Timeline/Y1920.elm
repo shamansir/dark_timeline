@@ -17,7 +17,7 @@ y1920 =
         Adam
         ( throughout 1920 )
         ( [ adamAtStartOf19xx
-          , ( Hanno_Noah, Adult, from2040 )
+          , ( Hanno_Noah, Adult, TraveledFromUnknown_ 2040 )
           ]
         )
         ( sep 3 7 )
