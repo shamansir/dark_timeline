@@ -54,6 +54,7 @@ type Existence
     | Wormhole
     | Birth
     | Death
+    -- TODO: Alien (so marked traveled only at the moment of travel), Referenced
     -- TODO: With TimeMachine or Caves or Wormhole
 
 

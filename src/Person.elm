@@ -16,6 +16,7 @@ type PersonId
     | Martha_2
     | Martha_3
     | Bartosz
+    | Bartosz_2
     | Franziska
     | Magnus
     | Gustav

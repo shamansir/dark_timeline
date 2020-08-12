@@ -303,7 +303,7 @@ y2020 =
         Adam
         ( exact 27 Jun 2020 )
         ( [ ( Martha_2, Teen, TraveledFromUnknown ) -- FIXME: we know wherefrom?
-          , ( Bartosz, Teen, Belongs ) -- FIXME: this Bartosz is from the spin-world
+          , ( Bartosz_2, Teen, Belongs ) -- FIXME: this Bartosz is from the spin-world
           , ( Martha_3, Old, TraveledFromUnknown )  -- FIXME: we know where she is?
           ]
         )
