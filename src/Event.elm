@@ -77,6 +77,10 @@ throughout : Int -> Date
 throughout = Throughout
 
 
+someday : Month -> Int -> Date
+someday = Someday
+
+
 theyAll : Existence -> List ( PersonId, Stage ) -> Participants
 theyAll = List.map << addExistense
 

@@ -26,6 +26,7 @@ type PersonId
     | Hannah
     | Claudia
     | Claudia_2
+    | Claudia_3
     | Helge
     | Ulrich
     | Yasin

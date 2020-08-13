@@ -138,6 +138,10 @@ to20Jun2019 : Existence
 to20Jun2019 = TravelsTo (exact 20 Jun 2019) Adam <| sep 2 6
 
 
+to27June2019 : Existence
+to27June2019 = TravelsTo (exact 27 Jun 2019) Adam <| sep 3 8
+
+
 from26Jun2020 : Existence
 from26Jun2020 = TraveledFrom (exact 26 Jun 2020) Adam <| sep 2 7
 
