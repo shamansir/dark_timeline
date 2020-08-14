@@ -15,7 +15,7 @@ import Msg exposing (Msg)
 import Event exposing (Event)
 import Timeline exposing (Timeline, timeline)
 
-import Render.Event as Event exposing (view)
+import Render.Event as Event exposing (view, width, height)
 
 
 type alias Model = Graph Event ()
@@ -38,19 +38,28 @@ subscription _ = Sub.none
 
 view : Model -> Html Msg
 view graph =
-    S.svg
-        [ SA.width "1000", SA.height "12000" ]
-        <| List.indexedMap
-            (\idx evtView ->
-                S.g
-                    [ SA.style
-                        <| "transform: translate(0," ++ String.fromInt (50 + idx * 50) ++ "px);" ]
-                    [ evtView ])
-        <| List.map Event.view
-        <| List.map .label
-        <| List.map .node
-        <| List.reverse
-        <| Graph.dfs (Graph.onDiscovery (::)) [] graph
+    let
+        wrapperYShift = Event.height / 2
+        wrapperTransform =
+            "transform: translate(0, " ++ String.fromFloat wrapperYShift ++ "px);"
+        eventTransform idx =
+            "transform: translate(0," ++ String.fromInt (idx * Event.height) ++ "px);"
+    in
+        S.svg
+            [ SA.width <| String.fromInt Event.width
+            , SA.height <| String.fromInt <| Event.height * Graph.size graph
+            ]
+            <| S.g [ SA.style wrapperTransform ] >> List.singleton
+            <| List.indexedMap
+                (\idx evtView ->
+                    S.g
+                        [ SA.style <| eventTransform idx ]
+                        [ evtView ]
+                )
+            <| List.map Event.view
+            <| List.map (.label << .node)
+            <| List.reverse
+            <| Graph.dfs (Graph.onDiscovery (::)) [] graph
 
 
 main : Program () Model ()
