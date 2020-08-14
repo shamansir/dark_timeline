@@ -1,4 +1,4 @@
-module Timeline exposing (timeline)
+module Timeline exposing (Timeline, timeline)
 
 
 import Event exposing (Event)
