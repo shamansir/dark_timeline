@@ -39,15 +39,23 @@ subscription _ = Sub.none
 view : Model -> Html Msg
 view graph =
     let
-        wrapperYShift = Event.height / 2
+        margin = 10
+        halfHeight = Event.height / 2
+        heightAndMargin = Event.height + margin
+        translate x y
+            = "transform: translate("
+                ++ String.fromFloat x ++ "px, "
+                ++ String.fromFloat y ++ "px);"
+        totalHeight = ((Event.height + margin) * Graph.size graph) + margin
+        totalWidth = margin + Event.width + margin
         wrapperTransform =
-            "transform: translate(0, " ++ String.fromFloat wrapperYShift ++ "px);"
+            translate margin (halfHeight + margin)
         eventTransform idx =
-            "transform: translate(0," ++ String.fromInt (idx * Event.height) ++ "px);"
+            translate 0.0 <| toFloat idx * heightAndMargin
     in
         S.svg
-            [ SA.width <| String.fromInt Event.width
-            , SA.height <| String.fromInt <| Event.height * Graph.size graph
+            [ SA.width <| String.fromInt totalWidth
+            , SA.height <| String.fromInt totalHeight
             ]
             <| S.g [ SA.style wrapperTransform ] >> List.singleton
             <| List.indexedMap
