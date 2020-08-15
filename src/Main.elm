@@ -16,6 +16,7 @@ import Event exposing (Event)
 import Timeline exposing (Timeline, timeline)
 
 import Render.Event as Event exposing (view, width, height)
+import Render.Util exposing (translate)
 
 
 type alias Model = Graph Event ()
@@ -42,10 +43,6 @@ view graph =
         margin = 10
         halfHeight = Event.height / 2
         heightAndMargin = Event.height + margin
-        translate x y
-            = "transform: translate("
-                ++ String.fromFloat x ++ "px, "
-                ++ String.fromFloat y ++ "px);"
         totalHeight = ((Event.height + margin) * Graph.size graph) + margin
         totalWidth = margin + Event.width + margin
         wrapperTransform =

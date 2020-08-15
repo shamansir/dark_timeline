@@ -11,6 +11,10 @@ import Person exposing (..)
 import Event exposing (..)
 
 
+import Render.Person as Person exposing (..)
+import Render.Util exposing (translate, distribute)
+
+
 width = 350
 height = 130
 
@@ -31,7 +35,21 @@ view event =
             , SA.strokeWidth <| String.fromInt 3
             ]
             []
-        , S.text_
+        , S.g
             []
+            <| List.map
+                (\(shift, (personId,stage,_)) ->
+                    Svg.g
+                        [ SA.style <| translate shift 0 ]
+                        [ Person.view (personId, stage) ]
+                )
+                --(Person.view << (\(p,s,_) -> (p,s)))
+            <| distribute 50
+            <| event.participants
+        , S.text_
+            [ SA.fontFamily "sans-serif"
+            , SA.fontSize <| String.fromInt 13
+            , SA.x <| String.fromInt 10
+            ]
             [ S.text event.description ]
         ]
