@@ -1,6 +1,7 @@
 module Render.Event exposing (view, width, height)
 
 
+import Html as H
 import Svg as S
 import Svg.Attributes as SA
 import Svg exposing (Svg)
@@ -12,7 +13,7 @@ import Event exposing (..)
 
 
 import Render.Person as Person exposing (..)
-import Render.Util exposing (translate, distribute)
+import Render.Util exposing (translate, distribute, wrapText)
 
 
 width = 350
@@ -36,7 +37,7 @@ view event =
             ]
             []
         , S.g
-            []
+            [ SA.style <| translate 10 0 ]
             <| List.map
                 (\(shift, (personId,stage,_)) ->
                     Svg.g
@@ -46,10 +47,7 @@ view event =
                 --(Person.view << (\(p,s,_) -> (p,s)))
             <| distribute 50
             <| event.participants
-        , S.text_
-            [ SA.fontFamily "sans-serif"
-            , SA.fontSize <| String.fromInt 13
-            , SA.x <| String.fromInt 10
-            ]
-            [ S.text event.description ]
+        , S.g
+            [ SA.style <| translate 10 0 ]
+            [ event.description |> wrapText 330 500 ]
         ]
