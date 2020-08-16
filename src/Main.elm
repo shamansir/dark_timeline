@@ -15,8 +15,7 @@ import Msg exposing (Msg)
 import Event exposing (Event)
 import Timeline exposing (Timeline, timeline)
 
-import Render.Event as Event exposing (view, width, height)
-import Render.Timeline as Timeline exposing (view)
+import Render.Graph as Graph exposing (view)
 import Render.Util exposing (translate)
 
 
@@ -39,11 +38,7 @@ subscription _ = Sub.none
 
 
 view : Model -> Html Msg
-view =
-    Graph.dfs (Graph.onDiscovery (::)) []
-        >> List.reverse
-        >> List.map (.label << .node)
-        >> Timeline.view
+view = Graph.view
 
 
 main : Program () Model ()
