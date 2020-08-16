@@ -16,6 +16,7 @@ import Event exposing (Event)
 import Timeline exposing (Timeline, timeline)
 
 import Render.Event as Event exposing (view, width, height)
+import Render.Timeline as Timeline exposing (view)
 import Render.Util exposing (translate)
 
 
@@ -38,33 +39,11 @@ subscription _ = Sub.none
 
 
 view : Model -> Html Msg
-view graph =
-    let
-        margin = 10
-        halfHeight = Event.height / 2
-        heightAndMargin = Event.height + margin
-        totalHeight = ((Event.height + margin) * Graph.size graph) + margin
-        totalWidth = margin + Event.width + margin
-        wrapperTransform =
-            translate margin (halfHeight + margin)
-        eventTransform idx =
-            translate 0.0 <| toFloat idx * heightAndMargin
-    in
-        S.svg
-            [ SA.width <| String.fromInt totalWidth
-            , SA.height <| String.fromInt totalHeight
-            ]
-            <| S.g [ SA.style wrapperTransform ] >> List.singleton
-            <| List.indexedMap
-                (\idx evtView ->
-                    S.g
-                        [ SA.style <| eventTransform idx ]
-                        [ evtView ]
-                )
-            <| List.map Event.view
-            <| List.map (.label << .node)
-            <| List.reverse
-            <| Graph.dfs (Graph.onDiscovery (::)) [] graph
+view =
+    Graph.dfs (Graph.onDiscovery (::)) []
+        >> List.reverse
+        >> List.map (.label << .node)
+        >> Timeline.view
 
 
 main : Program () Model ()
