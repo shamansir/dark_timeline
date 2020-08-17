@@ -13,16 +13,17 @@ import Event exposing (..)
 
 
 import Render.Person as Person exposing (..)
-import Render.Util exposing (translate, distribute, wrapText)
+import Render.Util exposing (translate, distribute, wrapText, Sized)
 
 
 width = 350
 height = 130
 
 
-view : Event -> Svg Msg
+view : Event -> Sized (Svg Msg)
 view event =
-    S.g
+    ( { width = width, height = height }
+    , S.g
         []
         [ S.rect
             [ SA.rx <| String.fromInt 15
@@ -51,3 +52,4 @@ view event =
             [ SA.style <| translate 10 0 ]
             [ event.description |> wrapText 330 500 ]
         ]
+    )

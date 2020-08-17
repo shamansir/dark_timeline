@@ -15,6 +15,7 @@ import Person exposing (Person)
 
 import Render.Event as Event exposing (view)
 import Render.Group as Group exposing (..)
+import Render.Util exposing (withoutSize)
 
 
 type Axis
@@ -44,6 +45,12 @@ viewAsGrid axes =
     plot axes
         >> Group.view Horizontal
             (Group.view Vertical Event.view)
+        >> (\({ width, height }, v) ->
+             S.svg
+                [ SA.width <| String.fromFloat width
+                , SA.height<| String.fromFloat height
+                ]
+                [ v ])
 
 
 plot : { x : Axis, y : Axis } -> Graph Event () -> Group (Group Event)

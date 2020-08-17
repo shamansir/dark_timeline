@@ -8,6 +8,13 @@ import Html as H exposing (..)
 import Html.Attributes as HA exposing (..)
 
 
+type alias Sized a = ( { width : Float, height : Float }, a )
+
+
+withoutSize : Sized a -> a
+withoutSize = Tuple.second
+
+
 translate : Float -> Float -> String
 translate x y
     = "transform: translate("
