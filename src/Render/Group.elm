@@ -1,4 +1,4 @@
-module Render.Timeline exposing (..)
+module Render.Group exposing (..)
 
 
 import Html exposing (Html)
@@ -14,8 +14,26 @@ import Render.Event as Event exposing (view, width, height)
 import Render.Util exposing (translate)
 
 
-view : Timeline -> Html Msg
-view timeline =
+type alias Label = String
+
+
+type Group a
+    = Items Label (List a)
+    | Nest Label (Group a)
+
+
+type Direction
+    = Horizontal
+    | Vertical
+
+
+emptyGroup : Group a
+emptyGroup =
+    Items "" []
+
+
+view : Direction -> (a -> Html Msg) -> Group a -> Html Msg
+view direction renderItem group =
     let
         margin = 10
         halfHeight = Event.height / 2

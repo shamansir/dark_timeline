@@ -13,7 +13,8 @@ import Msg exposing (Msg)
 import Event exposing (..)
 import Person exposing (Person)
 
-import Render.Timeline as Timeline exposing (view)
+import Render.Event as Event exposing (view)
+import Render.Group as Group exposing (..)
 
 
 type Axis
@@ -25,13 +26,35 @@ type Axis
     | ByWorld (World -> Bool)
 
 
+noFilter : a -> Bool
+noFilter = always True
+
+
 view : Graph Event () -> Html Msg
+-- view = viewAsGrid { x = None, y = All }
 view =
-    Graph.dfs (Graph.onDiscovery (::)) []
-        >> List.reverse
-        >> List.map (.label << .node)
-        >> Timeline.view
+    viewAsGrid
+        { x = ByWorld noFilter
+        , y = ByDate noFilter
+        }
 
 
 viewAsGrid : { x : Axis, y : Axis } -> Graph Event () -> Html Msg
-viewAsGrid { x, y } _ = H.div [] []
+viewAsGrid axes =
+    plot axes
+        >> Group.view Horizontal
+            (Group.view Vertical Event.view)
+
+
+plot : { x : Axis, y : Axis } -> Graph Event () -> Group (Group Event)
+plot { x, y } =
+    Graph.dfs (Graph.onDiscovery (::)) []
+        >> List.reverse
+        >> List.map (.label << .node)
+        >> Items "root"
+        >> List.singleton
+        >> Items "foo"
+
+
+group : List a -> (a -> Bool) -> Group a
+group _ _ = emptyGroup
