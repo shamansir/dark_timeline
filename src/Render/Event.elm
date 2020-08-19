@@ -38,7 +38,7 @@ view event =
             ]
             []
         , S.g
-            [ SA.style <| translate (10 + Person.radius / 2) (height / 4) ]
+            [ SA.style <| translate 10 (height / 6) ]
             <| List.map
                 (\(shift, (personId,stage,_)) ->
                     Svg.g
