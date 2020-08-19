@@ -17,7 +17,7 @@ radius = 20
 view : Person -> Svg Msg
 view ( personId, personStage ) =
     S.g
-        []
+        [ SA.id <| Person.uniqueId personId personStage ]
         [ S.circle
             [ SA.r <| String.fromFloat radius
             , SA.cx <| String.fromFloat radius

@@ -110,10 +110,12 @@ knownStages person =
         Doris -> [ Adult ]
         Egon -> [ Adult, Old ]
         Elisabeth -> [ Teen, Adult ]
-        Franziska -> [ Adult, Old ]
+        Franziska -> [ Teen, Old ]
         Gretchen -> [ Adult ] -- ??
+        Gustav -> [ Child, Old ]
         Hannah -> [ Teen, Adult ]
         Hanno_Noah -> [ Child, Teen, Adult ]
+        Heinrich -> [ Adult ]
         Helge -> [ Child, Adult, Old ]
         Ines -> [ Teen, Adult, Old ]
         Jana -> [ Teen, Adult, Old ]
@@ -125,7 +127,7 @@ knownStages person =
         Mikkel -> [ Child, Adult ]
         Peter -> [ Teen, Adult ]
         Regina -> [ Teen, Adult ]
-        Silja -> [ Adult ]
+        Silja -> [ Child, Teen, Adult ]
         HGTannhaus -> [ Adult, Old ]
         Torben -> [ Adult ]
         Tronte -> [ Teen, Old, Adult ]
@@ -139,6 +141,11 @@ knownStages person =
         Claudia_3 -> knownStages Claudia
 
         _ -> []
+
+
+uniqueId : PersonId -> Stage -> String
+uniqueId person stage =
+    codename person ++ "/" ++ stageToString stage
 
 
 isKnownStage : PersonId -> Stage -> Bool
@@ -184,6 +191,7 @@ codename person =
         Heinrich -> "heinrich"
         Helene -> "helene"
         Helge -> "helge"
+        HGTannhaus -> "hg_tannhaus"
         Ines -> "ines"
         Jana -> "jana"
         Jonas -> "jonas"
@@ -203,7 +211,6 @@ codename person =
         Regina -> "regina"
         Silja -> "silja"
         Sonja -> "sonja"
-        HGTannhaus -> "tannhaus"
         Torben -> "torben"
         Tronte -> "tronte"
         Ulla -> "ulla"

@@ -172,7 +172,7 @@ y1986 =
     , Event
         Adam
         ( exact 9 Nov 1986 )
-        ( [ ( Boris_Aleksander, Adult, Belongs )
+        ( [ ( Boris_Aleksander, Teen, Belongs )
           , ( Regina, Teen, Belongs )
           ]
         )
@@ -182,7 +182,7 @@ y1986 =
     , Event
         Adam
         ( exact 9 Nov 1986 )
-        ( [ ( Boris_Aleksander, Adult, Belongs )
+        ( [ ( Boris_Aleksander, Teen, Belongs )
           ]
         )
         ( sep 1 9 )
