@@ -189,7 +189,7 @@ y1954 =
         Adam
         ( exact 24 Sep 1954 )
         ( [ ( Hannah, Adult, from26Jun2020 )
-          , ( FObendorf, Adult, Belongs )
+          , ( Obendorf, Adult, Belongs )
           , ( Helene, Teen, Belongs )
           ]
         )

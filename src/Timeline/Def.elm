@@ -23,7 +23,7 @@ strangerTeamFrom2020 =
 
 theUnknowns : Participants
 theUnknowns =
-    [ ( Unknown, Child )
+    [ ( Unknown, Teen )
     , ( Unknown, Adult )
     , ( Unknown, Old )
     ] |> theyAll TraveledFromUnknown

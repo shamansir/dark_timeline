@@ -39,7 +39,7 @@ type PersonId
     | HGTannhaus
     | Katharina
     | Helene
-    | FObendorf -- Fran? Obendorf
+    | Obendorf -- Fran? Obendorf
     | Marek
     | Sonja
     | Charlotte
@@ -59,6 +59,10 @@ type PersonId
     | Torben
     | Clausen
     | Elisabeth
+    -- below were not met before
+    | Bernandette
+    | Daniel
+    | Jana
 
 
 type alias Person = ( PersonId, Stage )
@@ -91,11 +95,128 @@ names person =
         _ -> []
 
 
+knownStages : PersonId -> List Stage
+knownStages person =
+    case person of
+        Agnes -> [ Teen, Adult ]
+        Bartosz -> [ Teen, Adult ]
+        Boris_Aleksander -> [ Teen, Adult ]
+        Bernandette -> [ Adult ]
+        Bernd -> [ Adult, Old ]
+        Charlotte -> [ Teen, Adult ]
+        Claudia -> [ Teen, Adult, Old ]
+        Clausen -> [ Teen, Adult ]
+        Daniel -> [ Adult ]
+        Doris -> [ Adult ]
+        Egon -> [ Adult, Old ]
+        Elisabeth -> [ Teen, Adult ]
+        Franziska -> [ Adult, Old ]
+        Gretchen -> [ Adult ] -- ??
+        Hannah -> [ Teen, Adult ]
+        Hanno_Noah -> [ Child, Teen, Adult ]
+        Helge -> [ Child, Adult, Old ]
+        Ines -> [ Teen, Adult, Old ]
+        Jana -> [ Teen, Adult, Old ]
+        Jonas -> [ Teen, Adult, Old ]
+        Katharina -> [ Teen, Adult ]
+        Mads -> [ Child ]
+        Magnus -> [ Teen, Adult ]
+        Martha -> [ Teen, Adult, Old ]
+        Mikkel -> [ Child, Adult ]
+        Peter -> [ Teen, Adult ]
+        Regina -> [ Teen, Adult ]
+        Silja -> [ Adult ]
+        HGTannhaus -> [ Adult, Old ]
+        Torben -> [ Adult ]
+        Tronte -> [ Teen, Old, Adult ]
+        Ulrich -> [ Teen, Old, Adult ]
+        Unknown -> [ Teen, Old, Adult ]
+
+        Martha_2 -> knownStages Martha
+        Martha_3 -> knownStages Martha
+        Bartosz_2 -> knownStages Bartosz
+        Claudia_2 -> knownStages Claudia
+        Claudia_3 -> knownStages Claudia
+
+        _ -> []
+
+
+isKnownStage : PersonId -> Stage -> Bool
+isKnownStage person stage =
+    List.member stage <| knownStages person
+
+
 picture : PersonId -> Stage -> Maybe String
 picture person stage =
-    ( case ( person, stage ) of
-        ( Jonas, Old ) -> Just <| "jonas/jonas_old"
-        ( Jonas, Adult ) -> Just <| "jonas/jonas_adult_2"
-        ( Jonas, Teen ) -> Just <| "jonas/jonas_teen"
-        _ -> Nothing
+
+    ( if isKnownStage person stage
+        then Just <| codename person ++ "/" ++ stageToString stage
+        else Nothing
     ) |> Maybe.map (\fileName -> "./assets/" ++ fileName ++ "_c.png")
+
+
+codename : PersonId -> String
+codename person =
+    case person of
+        Agnes -> "agnes"
+        Bartosz -> "bartosz"
+        Bartosz_2 -> codename Bartosz
+        Boris_Aleksander -> "aleksander"
+        Benjamin -> "benjamin"
+        Benni -> "benni"
+        Bernandette -> "bernandette"
+        Bernd -> "bernd"
+        Charlotte -> "charlotte"
+        Claudia -> "claudia"
+        Claudia_2 -> codename Claudia
+        Claudia_3 -> codename Claudia
+        Clausen -> "clausen"
+        Daniel -> "daniel"
+        Doris -> "doris"
+        Egon -> "egon"
+        Elisabeth -> "elisabeth"
+        Erik -> "erik"
+        Franziska -> "franziska"
+        Gretchen -> "greta" -- ??
+        Gustav -> "gustav"
+        Hannah -> "hannah"
+        Hanno_Noah -> "hanno"
+        Heinrich -> "heinrich"
+        Helene -> "helene"
+        Helge -> "helge"
+        Ines -> "ines"
+        Jana -> "jana"
+        Jonas -> "jonas"
+        Jurgen -> "jurgen"
+        Katharina -> "katharina"
+        Killian -> "killian"
+        Leopold -> "leopold"
+        Mads -> "mads"
+        Magnus -> "magnus"
+        Marek -> "marek"
+        Martha -> "martha"
+        Martha_2 -> codename Martha
+        Martha_3 -> codename Martha
+        Mikkel -> "mikkel"
+        Obendorf -> "obendorf"
+        Peter -> "peter"
+        Regina -> "regina"
+        Silja -> "silja"
+        Sonja -> "sonja"
+        HGTannhaus -> "tannhaus"
+        Torben -> "torben"
+        Tronte -> "tronte"
+        Ulla -> "ulla"
+        Ulrich -> "ulrich"
+        Unknown -> "unknown"
+        Yasin -> "yasin"
+
+
+stageToString : Stage -> String
+stageToString stage =
+    case stage of
+        Child -> "child"
+        Teen -> "teen"
+        Adult -> "adult"
+        Old -> "old"
+        Poodle -> "poodle"
