@@ -11,10 +11,8 @@ import Event exposing (Event)
 import Timeline exposing (Timeline, timeline)
 
 import Render.Event as Event exposing (view, width, height)
-import Render.Util exposing (translate, withoutSize, Sized, sized, mapAccum)
-
-
-type alias Label = String
+import Render.Label as Label
+import Render.Util exposing (..)
 
 
 type Group a
@@ -29,7 +27,7 @@ type Direction
 
 emptyGroup : Group a
 emptyGroup =
-    Items "" []
+    Items (Label "") []
 
 
 view
@@ -41,36 +39,34 @@ view direction renderItem group =
     case ( direction, group ) of
         ( Vertical, Items label items ) ->
             let
-                margin = 10
+                horzMargin = 5
+                vertMargin = 10
                 renderedItems = items |> List.map renderItem
                 totalWidth =
                     renderedItems
                         |> List.map (Tuple.first >> .width)
                         |> List.maximum
                         |> Maybe.withDefault 0
-                totalHeight =
-                    renderedItems
-                        |> List.map (Tuple.first >> .height)
-                        |> List.foldl (\itemHeight total -> total + itemHeight + margin) margin
-                withTransforms
+                ( totalHeight, withTransforms )
                     = renderedItems
                         |> mapAccum
                             (\({ height }, item ) prev ->
                                 let
-                                    shift = prev + height + margin
+                                    shift = prev + height + vertMargin
                                 in
                                     ( shift
                                     , S.g [ SA.style <| translate 0 prev ] [ item ]
                                     )
                             )
-                            margin
-                        |> Tuple.second
+                            vertMargin
             in
                 withTransforms
                     |> S.g []
                     |> sized totalWidth totalHeight
-        ( Vertical, Nest _ nestedGroup ) ->
+                    |> Label.add label
+        ( Vertical, Nest label nestedGroup ) ->
             view direction renderItem nestedGroup
+                |> Label.add label
         ( Horizontal, _ ) ->
             view Vertical renderItem group
     {-

@@ -8,6 +8,13 @@ import Html as H exposing (..)
 import Html.Attributes as HA exposing (..)
 
 
+type Label = Label String
+
+
+labelAs : String -> Label
+labelAs = Label
+
+
 type alias Sized a = ( { width : Float, height : Float }, a )
 
 

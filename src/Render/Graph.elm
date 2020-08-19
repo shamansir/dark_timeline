@@ -15,7 +15,7 @@ import Person exposing (Person)
 
 import Render.Event as Event exposing (view)
 import Render.Group as Group exposing (..)
-import Render.Util exposing (withoutSize)
+import Render.Util exposing (withoutSize, labelAs)
 
 
 type Axis
@@ -58,9 +58,9 @@ plot { x, y } =
     Graph.dfs (Graph.onDiscovery (::)) []
         >> List.reverse
         >> List.map (.label << .node)
-        >> Items "root"
+        >> Items (labelAs "root")
         >> List.singleton
-        >> Items "foo"
+        >> Items (labelAs "foo")
 
 
 group : List a -> (a -> Bool) -> Group a
