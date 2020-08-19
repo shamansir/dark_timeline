@@ -15,6 +15,10 @@ withoutSize : Sized a -> a
 withoutSize = Tuple.second
 
 
+sized : Float -> Float -> a -> Sized a
+sized w h = Tuple.pair { width = w, height = h }
+
+
 translate : Float -> Float -> String
 translate x y
     = "transform: translate("

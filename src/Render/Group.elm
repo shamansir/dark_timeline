@@ -11,7 +11,7 @@ import Event exposing (Event)
 import Timeline exposing (Timeline, timeline)
 
 import Render.Event as Event exposing (view, width, height)
-import Render.Util exposing (translate, withoutSize, Sized)
+import Render.Util exposing (translate, withoutSize, Sized, sized)
 
 
 type alias Label = String
@@ -38,6 +38,43 @@ view
     -> Group a
     -> Sized (S.Svg Msg)
 view direction renderItem group =
+    case ( direction, group ) of
+        ( Vertical, Items label items ) ->
+            let
+                margin = 10
+                renderedItems = items |> List.map renderItem
+                totalWidth =
+                    renderedItems
+                        |> List.map (Tuple.first >> .width)
+                        |> List.maximum
+                        |> Maybe.withDefault 0
+                totalHeight =
+                    renderedItems
+                        |> List.map (Tuple.first >> .height)
+                        |> List.foldl (\itemHeight total -> total + itemHeight + margin) margin
+                withTransforms
+                    = renderedItems
+                        |> List.foldl
+                            (\({ height }, item ) ( total, newItems ) ->
+                                let
+                                    shift = total + height + margin
+                                in
+                                    ( shift
+                                    , newItems ++
+                                        [ S.g [ SA.style <| translate 0 shift ] [ item ] ]
+                                    )
+                            )
+                            ( margin, [] )
+                        |> Tuple.second
+            in
+                withTransforms
+                    |> S.g []
+                    |> sized totalWidth totalHeight
+        ( Vertical, Nest _ nestedGroup ) ->
+            view direction renderItem nestedGroup
+        ( Horizontal, _ ) ->
+            view Vertical renderItem group
+    {-
     let
         margin = 10
         halfHeight = Event.height / 2
@@ -63,3 +100,4 @@ view direction renderItem group =
             <| List.map Event.view
             <| timeline
         )
+    -}
