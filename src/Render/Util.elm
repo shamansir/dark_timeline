@@ -42,3 +42,19 @@ wrapText width height stringToWrap =
             ]
             [ H.text stringToWrap ]
         ]
+
+
+{- the copy of `mapAccuml` from `list-extra` -}
+mapAccum : ( a -> b -> ( b, c ) ) -> b -> List a -> ( b, List c )
+mapAccum f acc0 list =
+    let
+        ( accFinal, generatedList ) =
+            List.foldl
+                (\x ( acc1, ys ) ->
+                    let ( acc2, y ) = f x acc1
+                    in ( acc2, y :: ys )
+                )
+                ( acc0, [] )
+                list
+    in
+    ( accFinal, List.reverse generatedList )

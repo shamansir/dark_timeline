@@ -11,7 +11,7 @@ import Event exposing (Event)
 import Timeline exposing (Timeline, timeline)
 
 import Render.Event as Event exposing (view, width, height)
-import Render.Util exposing (translate, withoutSize, Sized, sized)
+import Render.Util exposing (translate, withoutSize, Sized, sized, mapAccum)
 
 
 type alias Label = String
@@ -54,17 +54,16 @@ view direction renderItem group =
                         |> List.foldl (\itemHeight total -> total + itemHeight + margin) margin
                 withTransforms
                     = renderedItems
-                        |> List.foldl
-                            (\({ height }, item ) ( total, newItems ) ->
+                        |> mapAccum
+                            (\({ height }, item ) prev ->
                                 let
-                                    shift = total + height + margin
+                                    shift = prev + height + margin
                                 in
                                     ( shift
-                                    , newItems ++
-                                        [ S.g [ SA.style <| translate 0 shift ] [ item ] ]
+                                    , S.g [ SA.style <| translate 0 prev ] [ item ]
                                     )
                             )
-                            ( margin, [] )
+                            margin
                         |> Tuple.second
             in
                 withTransforms
