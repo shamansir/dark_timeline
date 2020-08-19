@@ -18,7 +18,7 @@ add (Label label) ( size, to ) =
         }
     , S.g
         [ ]
-        [ S.text_ [] [ S.text label ]
+        [ S.text_ [ SA.dominantBaseline "hanging" ] [ S.text label ]
         , S.g
             [ SA.style <| translate 0 height ]
             [ to ]

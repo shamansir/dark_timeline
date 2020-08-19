@@ -29,7 +29,7 @@ view event =
             [ SA.rx <| String.fromInt 15
             , SA.ry <| String.fromInt 15
             , SA.x <| String.fromInt 0
-            , SA.y <| String.fromFloat (height / 2 * -1)
+            , SA.y <| String.fromInt 0
             , SA.width <| String.fromInt width
             , SA.height <| String.fromInt height
             , SA.stroke "black"
@@ -38,7 +38,7 @@ view event =
             ]
             []
         , S.g
-            [ SA.style <| translate 10 0 ]
+            [ SA.style <| translate (10 + Person.radius / 2) (height / 4) ]
             <| List.map
                 (\(shift, (personId,stage,_)) ->
                     Svg.g
@@ -49,7 +49,7 @@ view event =
             <| distribute 50
             <| event.participants
         , S.g
-            [ SA.style <| translate 10 0 ]
+            [ SA.style <| translate 10 (height / 2) ]
             [ event.description |> wrapText 330 500 ]
         ]
     )
