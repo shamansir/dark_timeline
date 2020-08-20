@@ -1,11 +1,15 @@
 module Render.Util exposing (..)
 
 
+import List.Extra as List exposing (gatherWith)
+
 import Svg exposing (Svg)
 import Svg as S exposing (..)
 import Svg.Attributes as SA exposing (..)
 import Html as H exposing (..)
 import Html.Attributes as HA exposing (..)
+
+import Compare exposing (Comparator)
 
 
 type Label = Label String
@@ -16,6 +20,10 @@ labelAs = Label
 
 
 type alias Sized a = ( { width : Float, height : Float }, a )
+
+
+noSize : a -> Sized a
+noSize = sized 0 0
 
 
 withoutSize : Sized a -> a
@@ -51,7 +59,7 @@ wrapText width height stringToWrap =
         ]
 
 
-{- the copy of `mapAccuml` from `list-extra` -}
+{- based on `mapAccuml` from `list-extra` -}
 mapAccum : ( a -> b -> ( b, c ) ) -> b -> List a -> ( b, List c )
 mapAccum f acc0 list =
     let
@@ -65,3 +73,12 @@ mapAccum f acc0 list =
                 list
     in
     ( accFinal, List.reverse generatedList )
+
+
+
+groupBy : (a -> a -> Bool) -> (a -> b) -> List a -> List (b, List a)
+groupBy comparator f list =
+    list
+        |> List.gatherWith comparator
+        |> List.map
+            (\(head, tail) -> ( f head, head::tail ))

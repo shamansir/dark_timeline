@@ -1,7 +1,8 @@
 module Event exposing (..)
 
+import Date as Date
 
-import Time exposing (Month)
+import Time exposing (Month(..))
 
 import Person exposing (..)
 
@@ -111,3 +112,51 @@ sep s e = ( Season s, Just <| Episode e )
 
 changeAge : Stage -> Participant -> Participant
 changeAge s = (\(p, _, e) -> (p, s, e))
+
+
+onSameDay : Event -> Event -> Bool
+onSameDay eventA eventB =
+    case ( eventA.date, eventB.date ) of
+        ( Exact ( dA, mA, yA ), Exact ( dB, mB, yB ) ) ->
+            (Date.fromCalendarDate dA mA yA |> Date.toRataDie)
+            == (Date.fromCalendarDate dA mA yA |> Date.toRataDie)
+        ( Someday mA yA, Someday mB yB ) -> True
+        ( Throughout yA, Throughout yB ) -> True
+        _ -> False
+
+
+onSameMonth : Event -> Event -> Bool
+onSameMonth eventA eventB =
+    case ( eventA.date, eventB.date ) of
+        ( Exact ( _, mA, yA ), Exact ( _, mB, yB ) ) ->
+            (Date.fromCalendarDate 1 mA yA |> Date.toRataDie)
+            == (Date.fromCalendarDate 1 mA yA |> Date.toRataDie)
+        ( Someday mA yA, Someday mB yB ) -> True
+        ( Throughout yA, Throughout yB ) -> True
+        _ -> False
+
+
+onSameYear : Event -> Event -> Bool
+onSameYear eventA eventB =
+    case ( eventA.date, eventB.date ) of
+        ( Exact ( _, _, yA ), Exact ( _, _, yB ) ) ->
+            (Date.fromCalendarDate 1 Jan yA |> Date.toRataDie)
+            == (Date.fromCalendarDate 1 Jan yA |> Date.toRataDie)
+        ( Someday Jan yA, Someday Jan yB ) -> True
+        ( Throughout yA, Throughout yB ) -> True
+        _ -> False
+
+
+dateToLabel : Date -> String
+dateToLabel date =
+    case date of
+        Exact ( d, m, y ) ->
+            Date.format "MMMM ddd, y" <| Date.fromCalendarDate d m y
+        Someday m y ->
+            Date.format "MMMM y" <| Date.fromCalendarDate 1 m y
+        Throughout y ->
+            Date.format "y" <| Date.fromCalendarDate 1 Jan y
+
+
+
+

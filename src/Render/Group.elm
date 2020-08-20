@@ -16,8 +16,11 @@ import Render.Util exposing (..)
 
 
 type Group a
-    = Items Label (List a)
-    | Nest Label (Group a)
+    = Empty
+    | Items Label (List a)
+    | Items_ (List a)
+    | Nest Label (List (Group a))
+    | Nest_ (List (Group a))
 
 
 type Direction
@@ -27,17 +30,25 @@ type Direction
 
 emptyGroup : Group a
 emptyGroup =
-    Items (Label "") []
+    Empty
 
 
-view
+form : Label -> List ( Label, List a ) -> Group a
+form rootLabel = Nest rootLabel << List.map (\(label, items) -> Items label items)
+
+
+form_ : List ( Label, List a ) -> Group a
+form_ = Nest_ << List.map (\(label, items) -> Items label items)
+
+
+distribute
     :  Direction
     -> (a -> Sized (S.Svg Msg))
-    -> Group a
+    -> List a
     -> Sized (S.Svg Msg)
-view direction renderItem group =
-    case ( direction, group ) of
-        ( Vertical, Items label items ) ->
+distribute direction renderItem items =
+    case direction of
+        Vertical ->
             let
                 horzMargin = 5
                 vertMargin = 10
@@ -63,36 +74,43 @@ view direction renderItem group =
                 withTransforms
                     |> S.g []
                     |> sized totalWidth totalHeight
-                    |> Label.add label
-        ( Vertical, Nest label nestedGroup ) ->
-            view direction renderItem nestedGroup
+        Horizontal ->
+            S.g [] [] |> noSize -- TODO:
+
+
+view
+    :  Direction
+    -> (a -> Sized (S.Svg Msg))
+    -> Group a
+    -> Sized (S.Svg Msg)
+view direction renderItem group =
+    case ( direction, group ) of
+        ( Vertical, Items label items ) ->
+
+            items
+                |> distribute Vertical renderItem
                 |> Label.add label
+
+        ( Vertical, Items_ items ) ->
+
+            items
+                |> distribute Vertical renderItem
+
+        ( Vertical, Nest label nestedGroups ) ->
+
+            nestedGroups
+                |> distribute Vertical (view Vertical renderItem)
+                |> Label.add label
+
+        ( Vertical, Nest_ nestedGroups ) ->
+
+            nestedGroups
+                |> distribute Vertical (view Vertical renderItem)
+
+        ( Vertical, Empty ) ->
+
+            S.g [] [] |> noSize
+
         ( Horizontal, _ ) ->
+
             view Vertical renderItem group
-    {-
-    let
-        margin = 10
-        halfHeight = Event.height / 2
-        heightAndMargin = Event.height + margin
-        totalHeight = ((Event.height + margin) * List.length timeline) + margin
-        totalWidth = margin + Event.width + margin
-        wrapperTransform =
-            translate margin (halfHeight + margin)
-        eventTransform idx =
-            translate 0.0 <| toFloat idx * heightAndMargin
-    in
-        (
-            { width = totalWidth
-            , height = toFloat totalHeight
-            }
-        , S.g [ SA.style wrapperTransform ]
-            <| List.indexedMap
-                (\idx evtView ->
-                    S.g
-                        [ SA.style <| eventTransform idx ]
-                        [ withoutSize evtView ]
-                )
-            <| List.map Event.view
-            <| timeline
-        )
-    -}

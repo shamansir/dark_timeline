@@ -1,8 +1,6 @@
 module Render.Graph exposing (..)
 
-
-import Graph exposing (Graph)
-import Graph as Graph exposing (..)
+import Date as Date exposing (compare)
 
 import Html exposing (Html)
 import Html as H
@@ -13,9 +11,13 @@ import Msg exposing (Msg)
 import Event exposing (..)
 import Person exposing (Person)
 
+import Graph exposing (Graph)
+import Graph as Graph exposing (..)
+
 import Render.Event as Event exposing (view)
 import Render.Group as Group exposing (..)
-import Render.Util exposing (withoutSize, labelAs)
+import Render.Util exposing (Label, withoutSize, labelAs, groupBy)
+import Render.Util as List exposing (groupBy)
 
 
 type Axis
@@ -63,5 +65,27 @@ plot { x, y } =
         >> Items (labelAs "foo")
 
 
-group : List a -> (a -> Bool) -> Group a
-group _ _ = emptyGroup
+group
+    :  (a -> a -> Bool)
+    -> (a -> Label)
+    -> List a
+    -> Group a
+group compare toLabel items =
+    items
+        |> groupBy compare toLabel
+        |> Group.form_
+
+
+groupEvents : Axis -> List Event -> Group Event
+groupEvents axis events =
+    case axis of
+        None -> emptyGroup
+        All -> Items_ events
+        ByDate filter ->
+            events
+                |> List.filter (.date >> filter)
+                |> group Event.onSameYear (.date >> dateToLabel >> labelAs)
+        ByPerson filter -> emptyGroup
+        BySeason filter -> emptyGroup
+        ByWorld filter -> emptyGroup
+
