@@ -16,9 +16,9 @@ import Render.Util exposing (..)
 
 
 type Group a
-    = Empty
-    | Items Label (List a)
-    | Items_ (List a)
+    = None
+    | Some Label (List a)
+    | Some_ (List a)
     | Nest Label (List (Group a))
     | Nest_ (List (Group a))
 
@@ -30,15 +30,15 @@ type Direction
 
 emptyGroup : Group a
 emptyGroup =
-    Empty
+    None
 
 
 form : Label -> List ( Label, List a ) -> Group a
-form rootLabel = Nest rootLabel << List.map (\(label, items) -> Items label items)
+form rootLabel = Nest rootLabel << List.map (\(label, items) -> Some label items)
 
 
 form_ : List ( Label, List a ) -> Group a
-form_ = Nest_ << List.map (\(label, items) -> Items label items)
+form_ = Nest_ << List.map (\(label, items) -> Some label items)
 
 
 distribute
@@ -85,13 +85,13 @@ view
     -> Sized (S.Svg Msg)
 view direction renderItem group =
     case ( direction, group ) of
-        ( Vertical, Items label items ) ->
+        ( Vertical, Some label items ) ->
 
             items
                 |> distribute Vertical renderItem
                 |> Label.add label
 
-        ( Vertical, Items_ items ) ->
+        ( Vertical, Some_ items ) ->
 
             items
                 |> distribute Vertical renderItem
@@ -99,15 +99,15 @@ view direction renderItem group =
         ( Vertical, Nest label nestedGroups ) ->
 
             nestedGroups
-                |> distribute Vertical (view Vertical renderItem)
-                |> Label.add label
+                 |> distribute Vertical (view Vertical renderItem)
+                 |> Label.add label
 
         ( Vertical, Nest_ nestedGroups ) ->
 
             nestedGroups
-                |> distribute Vertical (view Vertical renderItem)
+               |> distribute Vertical (view Vertical renderItem)
 
-        ( Vertical, Empty ) ->
+        ( Vertical, None ) ->
 
             S.g [] [] |> noSize
 

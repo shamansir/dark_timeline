@@ -29,14 +29,14 @@ y1888 =
         ( season 3 )
         "The team of Stranger-Jonas meet Gustav Tannhaus and become new Sic Mundus group"
 
+    {- Sep 21 -}
+
     , Event
         Adam
         ( exact 21 Sep 1888 )
         [ martha2from2019 ]
         ( sep 3 1 )
         "Martha-2 arrives to the Tannhaus factory"
-
-    {- Sep 21 -}
 
     , Event
         Adam

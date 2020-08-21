@@ -45,7 +45,7 @@ view =
 viewAsGrid : { x : Axis, y : Axis } -> Graph Event () -> Html Msg
 viewAsGrid axes =
     plot axes
-        >> Group.view Horizontal
+        >> -- Group.view Horizontal
             (Group.view Vertical Event.view)
         >> (\({ width, height }, v) ->
              S.svg
@@ -55,14 +55,12 @@ viewAsGrid axes =
                 [ v ])
 
 
-plot : { x : Axis, y : Axis } -> Graph Event () -> Group (Group Event)
+plot : { x : Axis, y : Axis } -> Graph Event () -> Group Event -- TODO: Group (Group Event)
 plot { x, y } =
     Graph.dfs (Graph.onDiscovery (::)) []
         >> List.reverse
         >> List.map (.label << .node)
-        >> Items (labelAs "root")
-        >> List.singleton
-        >> Items (labelAs "foo")
+        >> groupEvents y
 
 
 group
@@ -80,11 +78,11 @@ groupEvents : Axis -> List Event -> Group Event
 groupEvents axis events =
     case axis of
         None -> emptyGroup
-        All -> Items_ events
+        All -> Some_ events
         ByDate filter ->
             events
                 |> List.filter (.date >> filter)
-                |> group Event.onSameYear (.date >> dateToLabel >> labelAs)
+                |> group Event.onSameDay (.date >> dateToLabel >> labelAs)
         ByPerson filter -> emptyGroup
         BySeason filter -> emptyGroup
         ByWorld filter -> emptyGroup

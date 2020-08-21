@@ -118,10 +118,10 @@ onSameDay : Event -> Event -> Bool
 onSameDay eventA eventB =
     case ( eventA.date, eventB.date ) of
         ( Exact ( dA, mA, yA ), Exact ( dB, mB, yB ) ) ->
-            (Date.fromCalendarDate dA mA yA |> Date.toRataDie)
-            == (Date.fromCalendarDate dA mA yA |> Date.toRataDie)
-        ( Someday mA yA, Someday mB yB ) -> True
-        ( Throughout yA, Throughout yB ) -> True
+            (Date.fromCalendarDate yA mA dA |> Date.toRataDie)
+            == (Date.fromCalendarDate yA mA dA |> Date.toRataDie)
+        ( Someday mA yA, Someday mB yB ) -> mA == mB && yA == yB
+        ( Throughout yA, Throughout yB ) -> yA == yB
         _ -> False
 
 
@@ -131,8 +131,8 @@ onSameMonth eventA eventB =
         ( Exact ( _, mA, yA ), Exact ( _, mB, yB ) ) ->
             (Date.fromCalendarDate 1 mA yA |> Date.toRataDie)
             == (Date.fromCalendarDate 1 mA yA |> Date.toRataDie)
-        ( Someday mA yA, Someday mB yB ) -> True
-        ( Throughout yA, Throughout yB ) -> True
+        ( Someday mA yA, Someday mB yB ) -> mA == mB && yA == yB
+        ( Throughout yA, Throughout yB ) -> yA == yB
         _ -> False
 
 
@@ -142,8 +142,8 @@ onSameYear eventA eventB =
         ( Exact ( _, _, yA ), Exact ( _, _, yB ) ) ->
             (Date.fromCalendarDate 1 Jan yA |> Date.toRataDie)
             == (Date.fromCalendarDate 1 Jan yA |> Date.toRataDie)
-        ( Someday Jan yA, Someday Jan yB ) -> True
-        ( Throughout yA, Throughout yB ) -> True
+        ( Someday _ yA, Someday _ yB ) -> yA == yB
+        ( Throughout yA, Throughout yB ) -> yA == yB
         _ -> False
 
 
@@ -151,11 +151,11 @@ dateToLabel : Date -> String
 dateToLabel date =
     case date of
         Exact ( d, m, y ) ->
-            Date.format "MMMM ddd, y" <| Date.fromCalendarDate d m y
+            Date.format "ddd MMMM, yyyy" <| Date.fromCalendarDate y m d
         Someday m y ->
-            Date.format "MMMM y" <| Date.fromCalendarDate 1 m y
+            Date.format "MMMM yyyy" <| Date.fromCalendarDate y m 1
         Throughout y ->
-            Date.format "y" <| Date.fromCalendarDate 1 Jan y
+            Date.format "yyyy" <| Date.fromCalendarDate y Jan 1
 
 
 
