@@ -38,7 +38,7 @@ view : Graph Event () -> Html Msg
 view =
     viewAsGrid
         { x = ByWorld noFilter
-        , y = ByDate noFilter
+        , y = ByDate noFilter -- (Event.onSameYear <| Throughout 2053)
         }
 
 
@@ -82,7 +82,8 @@ groupEvents axis events =
         ByDate filter ->
             events
                 |> List.filter (.date >> filter)
-                |> group Event.onSameDay (.date >> dateToLabel >> labelAs)
+                |> group (Event.compareByDate Event.onSameYear) (.date >> yearToLabel >> labelAs)
+                --|> group (Event.compareByDate Event.onSameDay) (.date >> dateToLabel >> labelAs)
         ByPerson filter -> emptyGroup
         BySeason filter -> emptyGroup
         ByWorld filter -> emptyGroup

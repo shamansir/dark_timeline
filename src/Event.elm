@@ -114,37 +114,49 @@ changeAge : Stage -> Participant -> Participant
 changeAge s = (\(p, _, e) -> (p, s, e))
 
 
-onSameDay : Event -> Event -> Bool
-onSameDay eventA eventB =
-    case ( eventA.date, eventB.date ) of
+compareByDate : (Date -> Date -> Bool) -> (Event -> Event -> Bool)
+compareByDate f =
+    \evtA evtB -> f evtA.date evtB.date
+
+
+onSameDay : Date -> Date -> Bool
+onSameDay dateA dateB =
+    case ( dateA, dateB ) of
         ( Exact ( dA, mA, yA ), Exact ( dB, mB, yB ) ) ->
             (Date.fromCalendarDate yA mA dA |> Date.toRataDie)
-            == (Date.fromCalendarDate yA mA dA |> Date.toRataDie)
+            == (Date.fromCalendarDate yB mB dB |> Date.toRataDie)
         ( Someday mA yA, Someday mB yB ) -> mA == mB && yA == yB
         ( Throughout yA, Throughout yB ) -> yA == yB
         _ -> False
 
 
-onSameMonth : Event -> Event -> Bool
-onSameMonth eventA eventB =
-    case ( eventA.date, eventB.date ) of
+onSameMonth : Date -> Date -> Bool
+onSameMonth dateA dateB =
+    case ( dateA, dateB ) of
         ( Exact ( _, mA, yA ), Exact ( _, mB, yB ) ) ->
-            (Date.fromCalendarDate 1 mA yA |> Date.toRataDie)
-            == (Date.fromCalendarDate 1 mA yA |> Date.toRataDie)
+            (Date.fromCalendarDate yA mA 1 |> Date.toRataDie)
+            == (Date.fromCalendarDate yB mB 1 |> Date.toRataDie)
         ( Someday mA yA, Someday mB yB ) -> mA == mB && yA == yB
         ( Throughout yA, Throughout yB ) -> yA == yB
+        ( Exact ( _, mA, yA ), Someday mB yB) -> mA == mB && yA == yB
+        ( Someday mA yA, Exact ( _, mB, yB ) ) -> mA == mB && yA == yB
         _ -> False
 
 
-onSameYear : Event -> Event -> Bool
-onSameYear eventA eventB =
-    case ( eventA.date, eventB.date ) of
+onSameYear : Date -> Date -> Bool
+onSameYear dateA dateB =
+    case ( dateA, dateB ) of
         ( Exact ( _, _, yA ), Exact ( _, _, yB ) ) ->
-            (Date.fromCalendarDate 1 Jan yA |> Date.toRataDie)
-            == (Date.fromCalendarDate 1 Jan yA |> Date.toRataDie)
+            (Date.fromCalendarDate yA Jan 1 |> Date.toRataDie)
+            == (Date.fromCalendarDate yB Jan 1 |> Date.toRataDie)
         ( Someday _ yA, Someday _ yB ) -> yA == yB
         ( Throughout yA, Throughout yB ) -> yA == yB
-        _ -> False
+        ( Exact ( _, _, yA ), Someday _ yB ) -> yA == yB
+        ( Exact ( _, _, yA ), Throughout yB  ) -> yA == yB
+        ( Someday _ yA, Exact ( _, _, yB ) ) -> yA == yB
+        ( Someday _ yA, Throughout yB ) -> yA == yB
+        ( Throughout yA, Exact ( _, _, yB ) ) -> yA == yB
+        ( Throughout yA, Someday _ yB ) -> yA == yB
 
 
 dateToLabel : Date -> String
@@ -156,6 +168,15 @@ dateToLabel date =
             Date.format "MMMM yyyy" <| Date.fromCalendarDate y m 1
         Throughout y ->
             Date.format "yyyy" <| Date.fromCalendarDate y Jan 1
+
+
+yearToLabel : Date -> String
+yearToLabel date =
+    ( case date of
+        Exact ( _, _, y ) -> y
+        Someday _ y -> y
+        Throughout y -> y )
+    |> \y -> Date.format "yyyy" <| Date.fromCalendarDate y Jan 1
 
 
 
