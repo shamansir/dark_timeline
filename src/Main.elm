@@ -15,7 +15,8 @@ import Msg exposing (Msg)
 import Event exposing (Event)
 import Timeline exposing (Timeline, timeline)
 
-import Render.Graph as Graph exposing (view)
+import Render.Plot exposing (..)
+import Render.Plot as Plot exposing (view)
 import Render.Util exposing (translate)
 
 
@@ -38,7 +39,7 @@ subscription _ = Sub.none
 
 
 view : Model -> Html Msg
-view = Graph.view
+view = Plot.view { x = ByWorld noFilter, y = ByDate noFilter }
 
 
 main : Program () Model ()

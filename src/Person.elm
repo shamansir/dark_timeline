@@ -65,6 +65,12 @@ type PersonId
     | Jana
 
 
+type Family
+    = Tannhaus
+    -- | etc.
+
+
+
 type alias Person = ( PersonId, Stage )
 
 

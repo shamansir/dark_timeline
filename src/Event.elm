@@ -23,6 +23,9 @@ type Season = Season Int
 type alias Year = Int
 
 
+type alias Month = Time.Month
+
+
 type alias Day = Int
 
 
