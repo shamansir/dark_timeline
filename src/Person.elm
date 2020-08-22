@@ -101,6 +101,10 @@ names person =
         _ -> []
 
 
+familyOf : PersonId -> Maybe Family
+familyOf _ = Just Tannhaus
+
+
 knownStages : PersonId -> List Stage
 knownStages person =
     case person of

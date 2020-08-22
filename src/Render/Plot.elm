@@ -320,20 +320,67 @@ plot { x, y } graph =
                     graph
 
 
-arrangeByDate : (x -> Event.Date) -> List x -> ByDate x
-arrangeByDate extractDate source = []
+arrangeByWorld : (x -> World) -> List x -> ByWorld x
+arrangeByWorld extractWorld =
+    List.groupBy
+        (\a b -> extractWorld a == extractWorld b)
+        extractWorld
 
 
 arrangeByPerson : (x -> List PersonId) -> List x -> ByPerson x
-arrangeByPerson extractPerson source = []
+arrangeByPerson extractPersons _ = []
+    -- let
+    --     bothHaveSameParticipant a b =
+
+    -- in
+    --     List.groupBy
+    --         bothHaveSameParticipant
+    --         extractSeason
 
 
 arrangeBySeason : (x -> ( Season, Maybe Episode )) -> List x -> BySeason x
-arrangeBySeason extractSeason source = []
+arrangeBySeason extractEpisode =
+    let
+        extractSeason = extractEpisode >> Tuple.first
+        hasEpisode item =
+            case extractEpisode item of
+                ( _, Just _ ) -> True
+                _ -> False
+        equalEpisodes a b =
+            case ( extractEpisode a, extractEpisode b ) of
+                ( ( Season sA, Just (Episode eA) ), ( Season sB, Just (Episode eB) ) ) ->
+                    sA == sB && eA == eB
+                _ -> False
+    in
+        List.groupBy
+            (\a b -> extractSeason a == extractSeason b)
+            extractSeason
+                >> List.map
+                    (\(season, items) ->
+
+                        let
+                            ( allHaveEpisode, allHaveNoEpisode ) =
+                                items |> List.partition hasEpisode
+                        in
+                            ( season
+                            , allHaveNoEpisode
+                            , allHaveEpisode
+                                |> List.groupBy
+                                    equalEpisodes
+                                    (extractEpisode >> Tuple.second)
+                                |> List.filterMap
+                                     (\( maybeEpisode, item ) ->
+                                        case maybeEpisode of
+                                            Just episode -> Just ( episode, item )
+                                            Nothing -> Nothing
+                                     )
+                            )
+
+                    )
 
 
-arrangeByWorld : (x -> World) -> List x -> ByWorld x
-arrangeByWorld extractWorld source = []
+arrangeByDate : (x -> Event.Date) -> List x -> ByDate x
+arrangeByDate extractDate source = []
 
 
 groupByDate : ByDate x -> Group x
