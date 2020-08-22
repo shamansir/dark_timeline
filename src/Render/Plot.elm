@@ -2,6 +2,7 @@ module Render.Plot exposing (..)
 
 
 import Date as Date exposing (compare)
+import Time exposing (Month(..))
 
 import Html exposing (Html)
 import Html as H
@@ -30,11 +31,19 @@ type alias ByDate x
 
 
 type alias BySeason x
-    = List (Season, List (Episode, List x))
+    = List (Season, List x, List (Episode, List x))
 
 
 type alias ByWorld x
     = List (World, List x)
+
+
+-- type Transfer_ x
+--     = ByDate_ (ByDate x)
+--     | ByPerson_ (ByDate x)
+
+-- map : (a -> b) -> Transfer a -> Transfer b
+
 
 
 type Axis
@@ -57,6 +66,7 @@ type YAxis
 
 type XAxis
     = XNone
+    | XAll YAxis
     | XByDate (ByDate YAxis)
     | XByPerson (ByPerson YAxis)
     | XBySeason (BySeason YAxis)
@@ -106,6 +116,8 @@ toGroupX xAxis =
         <| case xAxis of
             XNone ->
                 Group.None
+            XAll yAxis ->
+                Some_ <| List.singleton yAxis
             XByDate yAxis ->
                 groupByDate yAxis
             XByPerson yAxis ->
@@ -137,8 +149,191 @@ plot : Spec -> Graph Event () -> Plot
 plot { x, y } graph =
     let
         eventList = toEventList graph
+        loadEventDate evt = Exact ( 1, Jan, 1888 )
+        loadEventPersons evt = []
+        loadEventWorld evt = Adam
+        loadEventSeason evt = ( Season 1, Nothing )
+        toWorlds : (List Event -> YAxis) -> ByWorld Event -> ByWorld YAxis
+        toWorlds f
+            = List.map
+                <| Tuple.mapSecond
+                    <| List.singleton << f
+        toPersons : (List Event -> YAxis) -> ByPerson Event -> ByPerson YAxis
+        toPersons f
+            = List.map
+                <| Tuple.mapSecond
+                    <| List.map
+                        <| Tuple.mapSecond
+                            <| List.singleton << f
+        toSeasons : (List Event -> YAxis) -> BySeason Event -> BySeason YAxis
+        toSeasons f
+            = List.map
+                (\(season, seasonItems, episodes) ->
+                    ( season
+                    , List.singleton <| f seasonItems
+                    , episodes
+                        |> List.map (Tuple.mapSecond <| List.singleton << f)
+                    )
+                )
+        toDates : (List Event -> YAxis) -> ByDate Event -> ByDate YAxis
+        toDates f
+            = List.map
+                (\(year, yearItems, months) ->
+                    ( year
+                    , List.singleton <| f yearItems
+                    , months |> List.map
+                        (\(month, monthItems, dates) ->
+                            ( month
+                            , List.singleton <| f monthItems
+                            , dates
+                                |> List.map (Tuple.mapSecond <| List.singleton << f))
+                        )
+                    )
+                )
     in
-        XNone
+        case ( x, y ) of
+            ( None, _ ) -> XNone
+            ( _, None ) -> XNone
+            ( All, All ) ->
+                eventList
+                    |> YAll
+                    |> XAll
+            ( All, ByDate _ ) ->
+                eventList
+                    |> arrangeByDate loadEventDate
+                    |> YByDate
+                    |> XAll
+            ( All, ByPerson _ ) ->
+                eventList
+                    |> arrangeByPerson loadEventPersons
+                    |> YByPerson
+                    |> XAll
+            ( All, BySeason _ ) ->
+                eventList
+                    |> arrangeBySeason loadEventSeason
+                    |> YBySeason
+                    |> XAll
+            ( All, ByWorld _ ) ->
+                eventList
+                    |> arrangeByWorld loadEventWorld
+                    |> YByWorld
+                    |> XAll
+            ( ByDate _, All ) ->
+                eventList
+                    |> arrangeByDate loadEventDate
+                    |> toDates YAll
+                    |> XByDate
+            ( ByDate _, ByDate filter ) ->
+                plot
+                    { x = All
+                    , y = ByDate filter }
+                    graph
+            ( ByDate _, ByPerson _ ) ->
+                eventList
+                    |> arrangeByDate loadEventDate
+                    |> toDates (YByPerson << arrangeByPerson loadEventPersons)
+                    |> XByDate
+            ( ByDate _, BySeason _ ) ->
+                eventList
+                    |> arrangeByDate loadEventDate
+                    |> toDates (YBySeason << arrangeBySeason loadEventSeason)
+                    |> XByDate
+            ( ByDate _, ByWorld _ ) ->
+                eventList
+                    |> arrangeByDate loadEventDate
+                    |> toDates (YByWorld << arrangeByWorld loadEventWorld)
+                    |> XByDate
+            ( ByPerson _, All ) ->
+                eventList
+                    |> arrangeByPerson loadEventPersons
+                    |> toPersons YAll
+                    |> XByPerson
+            ( ByPerson _, ByDate _ ) ->
+                eventList
+                    |> arrangeByPerson loadEventPersons
+                    |> toPersons (YByDate << arrangeByDate loadEventDate)
+                    |> XByPerson
+            ( ByPerson _, ByPerson filter ) ->
+                plot
+                    { x = All
+                    , y = ByPerson filter }
+                    graph
+            ( ByPerson _, BySeason _ ) ->
+                eventList
+                    |> arrangeByPerson loadEventPersons
+                    |> toPersons (YBySeason << arrangeBySeason loadEventSeason)
+                    |> XByPerson
+            ( ByPerson _, ByWorld _ ) ->
+                eventList
+                    |> arrangeByPerson loadEventPersons
+                    |> toPersons (YByWorld << arrangeByWorld loadEventWorld)
+                    |> XByPerson
+            ( BySeason _, All ) ->
+                eventList
+                    |> arrangeBySeason loadEventSeason
+                    |> toSeasons YAll
+                    |> XBySeason
+            ( BySeason _, ByDate _ ) ->
+                eventList
+                    |> arrangeBySeason loadEventSeason
+                    |> toSeasons (YByDate << arrangeByDate loadEventDate)
+                    |> XBySeason
+            ( BySeason _, ByPerson _ ) ->
+                eventList
+                    |> arrangeBySeason loadEventSeason
+                    |> toSeasons (YByPerson << arrangeByPerson loadEventPersons)
+                    |> XBySeason
+            ( BySeason _, BySeason filter ) ->
+                plot
+                    { x = All
+                    , y = BySeason filter }
+                    graph
+            ( BySeason _, ByWorld _ ) ->
+                eventList
+                    |> arrangeBySeason loadEventSeason
+                    |> toSeasons (YByWorld << arrangeByWorld loadEventWorld)
+                    |> XBySeason
+            ( ByWorld _, All ) ->
+                eventList
+                    |> arrangeByWorld loadEventWorld
+                    |> toWorlds YAll
+                    |> XByWorld
+            ( ByWorld _, ByDate _ ) ->
+                eventList
+                    |> arrangeByWorld loadEventWorld
+                    |> toWorlds (YByDate << arrangeByDate loadEventDate)
+                    |> XByWorld
+            ( ByWorld _, ByPerson _ ) ->
+                eventList
+                    |> arrangeByWorld loadEventWorld
+                    |> toWorlds (YByPerson << arrangeByPerson loadEventPersons)
+                    |> XByWorld
+            ( ByWorld _, BySeason _ ) ->
+                eventList
+                    |> arrangeByWorld loadEventWorld
+                    |> toWorlds (YBySeason << arrangeBySeason loadEventSeason)
+                    |> XByWorld
+            ( ByWorld _, ByWorld filter ) ->
+                plot
+                    { x = All
+                    , y = ByWorld filter }
+                    graph
+
+
+arrangeByDate : (x -> Event.Date) -> List x -> ByDate x
+arrangeByDate extractDate source = []
+
+
+arrangeByPerson : (x -> List PersonId) -> List x -> ByPerson x
+arrangeByPerson extractPerson source = []
+
+
+arrangeBySeason : (x -> ( Season, Maybe Episode )) -> List x -> BySeason x
+arrangeBySeason extractSeason source = []
+
+
+arrangeByWorld : (x -> World) -> List x -> ByWorld x
+arrangeByWorld extractWorld source = []
 
 
 groupByDate : ByDate x -> Group x
