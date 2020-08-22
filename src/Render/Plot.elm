@@ -22,19 +22,19 @@ import Render.Util as List exposing (groupBy)
 
 
 type alias ByPerson x
-    = List (Family, List (PersonId, x))
+    = List (Family, List (PersonId, List x))
 
 
 type alias ByDate x
-    = List (Event.Year, x, List (Event.Month, x, List (Event.Day, x)))
+    = List (Event.Year, List x, List (Event.Month, List x, List (Event.Day, List x)))
 
 
 type alias BySeason x
-    = List (Season, List (Episode, x))
+    = List (Season, List (Episode, List x))
 
 
 type alias ByWorld x
-    = List (World, x)
+    = List (World, List x)
 
 
 type Axis
@@ -48,11 +48,11 @@ type Axis
 
 type YAxis
     = YNone
-    | YAll
-    | YByDate (ByDate (List Event))
-    | YByPerson (ByPerson (List Event))
-    | YBySeason (BySeason (List Event))
-    | YByWorld (ByWorld (List Event))
+    | YAll (List Event)
+    | YByDate (ByDate Event)
+    | YByPerson (ByPerson Event)
+    | YBySeason (BySeason Event)
+    | YByWorld (ByWorld Event)
 
 
 type XAxis
@@ -82,8 +82,8 @@ view spec =
 
 viewPlot : Plot -> Html Msg
 viewPlot =
-    toGroup
-        >> -- Group.view Horizontal
+    toGroupX
+        >> Group.view Horizontal
             (Group.view Vertical Event.view)
         >> (\({ width, height }, v) ->
              S.svg
@@ -100,8 +100,37 @@ toEventList =
         >> List.map (.label << .node)
 
 
-toGroup : Plot -> Group Event
-toGroup thePlot = Group.None
+toGroupX : XAxis -> Group (Group Event)
+toGroupX xAxis =
+    Group.map toGroupY
+        <| case xAxis of
+            XNone ->
+                Group.None
+            XByDate yAxis ->
+                groupByDate yAxis
+            XByPerson yAxis ->
+                groupByPerson yAxis
+            XBySeason yAxis ->
+                groupBySeason yAxis
+            XByWorld yAxis ->
+                groupByWorld yAxis
+
+
+toGroupY : YAxis -> Group Event
+toGroupY yAxis =
+    case yAxis of
+        YNone ->
+            Group.None
+        YAll events ->
+            Group.Some_ events
+        YByDate events ->
+            groupByDate events
+        YByPerson events ->
+            groupByPerson events
+        YBySeason events ->
+            groupBySeason events
+        YByWorld events ->
+            groupByWorld events
 
 
 plot : Spec -> Graph Event () -> Plot
@@ -110,6 +139,22 @@ plot { x, y } graph =
         eventList = toEventList graph
     in
         XNone
+
+
+groupByDate : ByDate x -> Group x
+groupByDate _ = Group.None
+
+
+groupByPerson : ByPerson x -> Group x
+groupByPerson _ = Group.None
+
+
+groupBySeason : BySeason x -> Group x
+groupBySeason _ = Group.None
+
+
+groupByWorld : ByWorld x -> Group x
+groupByWorld _ = Group.None
 
 
 {-

@@ -33,6 +33,16 @@ emptyGroup =
     None
 
 
+map : (a -> b) -> Group a -> Group b
+map f group =
+    case group of
+        None -> None
+        Some label list -> Some label <| List.map f <| list
+        Some_ list -> Some_ <| List.map f <| list
+        Nest label list -> Nest label <| List.map (map f) <| list
+        Nest_ list -> Nest_ <| List.map (map f) <| list
+
+
 form : Label -> List ( Label, List a ) -> Group a
 form rootLabel = Nest rootLabel << List.map (\(label, items) -> Some label items)
 
