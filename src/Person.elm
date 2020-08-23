@@ -101,8 +101,21 @@ names person =
         _ -> []
 
 
-familyOf : PersonId -> Maybe Family
-familyOf _ = Just Tannhaus
+nameToString : Name -> String
+nameToString name =
+    case name of
+        Nickname nickname -> nickname
+        Full firstName familyName -> firstName ++ " " ++ familyName
+
+
+uniqueName : PersonId -> String
+uniqueName person =
+    person |> names |> List.head |> Maybe.map nameToString |> Maybe.withDefault "Unidentified"
+
+
+
+familyOf : PersonId -> Family
+familyOf _ = Tannhaus
 
 
 knownStages : PersonId -> List Stage

@@ -11,7 +11,7 @@ import Svg.Attributes as SA
 
 import Msg exposing (Msg)
 import Event exposing (..)
-import Person exposing (PersonId, Family, Person)
+import Person exposing (PersonId, Family, Person, uniqueName, codename)
 
 import Graph exposing (Graph)
 import Graph as Graph exposing (..)
@@ -19,7 +19,8 @@ import Graph as Graph exposing (..)
 import Render.Event as Event exposing (view)
 import Render.Group as Group exposing (..)
 import Render.Util exposing (Label, withoutSize, labelAs, groupBy)
-import Render.Util as List exposing (groupBy)
+import Render.Util as List exposing (groupBy, groupBy1, groupByEquals, groupByEquals1, participants)
+import Render.Util as Tuple exposing (triple, first1, mapSecond2)
 
 
 type alias ByPerson x
@@ -321,66 +322,57 @@ plot { x, y } graph =
 
 
 arrangeByWorld : (x -> World) -> List x -> ByWorld x
-arrangeByWorld extractWorld =
-    List.groupBy
-        (\a b -> extractWorld a == extractWorld b)
-        extractWorld
+arrangeByWorld = List.groupByEquals1
 
 
 arrangeByPerson : (x -> List PersonId) -> List x -> ByPerson x
-arrangeByPerson extractPersons _ = []
-    -- let
-    --     bothHaveSameParticipant a b =
-
-    -- in
-    --     List.groupBy
-    --         bothHaveSameParticipant
-    --         extractSeason
+arrangeByPerson extractPersons =
+    List.participants codename extractPersons
+        >> groupByEquals1 (Tuple.first >> Person.familyOf)
 
 
 arrangeBySeason : (x -> ( Season, Maybe Episode )) -> List x -> BySeason x
 arrangeBySeason extractEpisode =
     let
         extractSeason = extractEpisode >> Tuple.first
-        hasEpisode item =
-            case extractEpisode item of
-                ( _, Just _ ) -> True
-                _ -> False
         equalEpisodes a b =
             case ( extractEpisode a, extractEpisode b ) of
                 ( ( Season sA, Just (Episode eA) ), ( Season sB, Just (Episode eB) ) ) ->
                     sA == sB && eA == eB
                 _ -> False
     in
-        List.groupBy
-            (\a b -> extractSeason a == extractSeason b)
+        List.groupByEquals1
             extractSeason
                 >> List.map
-                    (\(season, items) ->
-
-                        let
-                            ( allHaveEpisode, allHaveNoEpisode ) =
-                                items |> List.partition hasEpisode
-                        in
-                            ( season
-                            , allHaveNoEpisode
-                            , allHaveEpisode
-                                |> List.groupBy
-                                    equalEpisodes
-                                    (extractEpisode >> Tuple.second)
-                                |> List.filterMap
-                                     (\( maybeEpisode, item ) ->
-                                        case maybeEpisode of
-                                            Just episode -> Just ( episode, item )
-                                            Nothing -> Nothing
-                                     )
-                            )
-
+                    (Tuple.mapSecond2
+                        <| List.groupSplitBy
+                            equalEpisodes
+                            (extractEpisode >> Tuple.second)
                     )
 
 
 arrangeByDate : (x -> Event.Date) -> List x -> ByDate x
-arrangeByDate extractDate source = []
+arrangeByDate extractDate source =
+    let
+        equalMonths a b = Event.onSameMonth (extractDate a) (extractDate b)
+        equalDays a b = Event.onSameDay (extractDate a) (extractDate b)
+    in
+        source
+            |> List.groupByEquals1 (extractDate >> getYear)
+            |> List.map
+                (Tuple.mapSecond2
+                    <| List.groupSplitBy
+                            equalMonths
+                            (extractDate >> Event.getMonth)
+
+                        >> Tuple.mapSecond
+                              (List.map
+                                 <| Tuple.mapSecond2
+                                 <| List.groupSplitBy
+                                        equalDays
+                                        (extractDate >> Event.getDay)
+                              )
+                )
 
 
 groupByDate : ByDate x -> Group x

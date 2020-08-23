@@ -174,13 +174,30 @@ dateToLabel date =
 
 
 yearToLabel : Date -> String
-yearToLabel date =
-    ( case date of
+yearToLabel =
+    getYear
+    >> \y -> Date.format "yyyy" <| Date.fromCalendarDate y Jan 1
+
+
+getYear : Date -> Year
+getYear date =
+    case date of
         Exact ( _, _, y ) -> y
         Someday _ y -> y
-        Throughout y -> y )
-    |> \y -> Date.format "yyyy" <| Date.fromCalendarDate y Jan 1
+        Throughout y -> y
 
 
+getMonth : Date -> Maybe Month
+getMonth date =
+    case date of
+        Exact ( _, m, _ ) -> Just m
+        Someday m _ -> Just m
+        Throughout _ -> Nothing
 
 
+getDay : Date -> Maybe Day
+getDay date =
+    case date of
+        Exact ( d, _, _ ) -> Just d
+        Someday _ _ -> Nothing
+        Throughout _ -> Nothing
