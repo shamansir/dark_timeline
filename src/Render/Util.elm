@@ -168,13 +168,8 @@ groupSplitBy1 comparator convert =
         convert
 
 
-groupSplitByEquals1 : (a -> Maybe b) -> List a -> ( List a, ( List ( b, List a ) ) )
+groupSplitByEquals1 : (a -> Maybe b) -> List a -> ( List a, List ( b, List a ) )
 groupSplitByEquals1 = groupSplitBy1 (==)
-
-
-splitMap : (a -> Bool) -> (List a -> c) -> List a -> (List a, c)
-splitMap check convert =
-    List.partition check >> flip >> Tuple.mapSecond convert
 
 
 {-| Helps when one needs to group events by participants, or artworks by artists, who could possibly be multiple for each artwork, all this w/o caring that the items could repeat in each group. -}
@@ -194,26 +189,26 @@ flip : ( a, b ) -> ( b, a )
 flip ( a, b ) = ( b, a )
 
 
-first1 : ( a, b, c ) -> a
-first1 (a, _, _ ) = a
+firstInTriplet : ( a, b, c ) -> a
+firstInTriplet (a, _, _ ) = a
 
 
-second1 : ( a, b, c ) -> ( b, c )
-second1 (_, b, c ) = ( b, c )
+secondInTriplet : ( a, b, c ) -> ( b, c )
+secondInTriplet (_, b, c ) = ( b, c )
 
 
-triple : a -> ( b, c ) -> ( a, b, c )
-triple a ( b, c ) = ( a, b, c )
+triplet : a -> ( b, c ) -> ( a, b, c )
+triplet a ( b, c ) = ( a, b, c )
 
 
-mapSecond1 : (( b, c ) -> ( d, e )) -> ( a, b, c ) -> ( a, d, e )
-mapSecond1 f ( a, b, c ) =
+mapSecondInTriplet : (( b, c ) -> ( d, e )) -> ( a, b, c ) -> ( a, d, e )
+mapSecondInTriplet f ( a, b, c ) =
     case f (b, c) of
         ( d, e ) -> ( a, d, e )
 
 
-mapSecond2 : ( b -> ( c, d ) ) -> ( a, b ) -> ( a, c, d )
-mapSecond2 f ( a, b ) =
+mapSecondToTuple : ( b -> ( c, d ) ) -> ( a, b ) -> ( a, c, d )
+mapSecondToTuple f ( a, b ) =
     case f b of
         ( c, d ) -> ( a, c, d )
 

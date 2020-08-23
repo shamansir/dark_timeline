@@ -250,3 +250,9 @@ stageToString stage =
         Adult -> "adult"
         Old -> "old"
         Poodle -> "poodle"
+
+
+familyToLabel : Family -> String
+familyToLabel family =
+    case family of
+        Tannhaus -> "Tannhaus"

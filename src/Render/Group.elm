@@ -15,12 +15,12 @@ import Render.Label as Label
 import Render.Util exposing (..)
 
 
-type Group a
+type Group l a
     = None
-    | Some Label (List a)
+    | Some l (List a)
     | Some_ (List a)
-    | Nest Label (List (Group a))
-    | Nest_ (List (Group a))
+    | Nest l (List (Group l a))
+    | Nest_ (List (Group l a))
 
 
 type Direction
@@ -28,27 +28,41 @@ type Direction
     | Vertical
 
 
-emptyGroup : Group a
+emptyGroup : Group l a
 emptyGroup =
     None
 
 
-map : (a -> b) -> Group a -> Group b
+map : (a -> b) -> Group l a -> Group l b
 map f group =
     case group of
         None -> None
-        Some label list -> Some label <| List.map f <| list
+        Some key list -> Some key <| List.map f <| list
         Some_ list -> Some_ <| List.map f <| list
-        Nest label list -> Nest label <| List.map (map f) <| list
+        Nest key list -> Nest key <| List.map (map f) <| list
         Nest_ list -> Nest_ <| List.map (map f) <| list
 
 
-form : Label -> List ( Label, List a ) -> Group a
-form rootLabel = Nest rootLabel << List.map (\(label, items) -> Some label items)
+mapKey : (l -> m) -> Group l a -> Group m a
+mapKey f group =
+    case group of
+        None -> None
+        Some key list -> Some (f key) list
+        Some_ list -> Some_ list
+        Nest key list -> Nest (f key) <| List.map (mapKey f) <| list
+        Nest_ list -> Nest_ <| List.map (mapKey f) <| list
 
 
-form_ : List ( Label, List a ) -> Group a
-form_ = Nest_ << List.map (\(label, items) -> Some label items)
+form : l -> List ( l, List a ) -> Group l a
+form rootLabel = Nest rootLabel << List.map (\(key, items) -> Some key items)
+
+
+form_ : List ( l, List a ) -> Group l a
+form_ = Nest_ << List.map (\(key, items) -> Some key items)
+
+
+-- form1 : List ( l, Group l a ) -> Group l a
+-- form1 = Nest_ << List.map (\(key, group) -> Nest key items)
 
 
 distribute
@@ -91,7 +105,7 @@ distribute direction renderItem items =
 view
     :  Direction
     -> (a -> Sized (S.Svg Msg))
-    -> Group a
+    -> Group Label a
     -> Sized (S.Svg Msg)
 view direction renderItem group =
     case ( direction, group ) of

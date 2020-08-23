@@ -20,7 +20,7 @@ import Render.Event as Event exposing (view)
 import Render.Group as Group exposing (..)
 import Render.Util exposing (Label, withoutSize, labelAs, groupBy)
 import Render.Util as List exposing (groupBy, groupBy1, groupByEquals, groupByEquals1, participants)
-import Render.Util as Tuple exposing (triple, first1, mapSecond2)
+import Render.Util as Tuple exposing (triplet, firstInTriplet, mapSecondToTuple)
 
 
 type alias ByPerson x
@@ -111,7 +111,7 @@ toEventList =
         >> List.map (.label << .node)
 
 
-toGroupX : XAxis -> Group (Group Event)
+toGroupX : XAxis -> Group Label (Group Label Event)
 toGroupX xAxis =
     Group.map toGroupY
         <| case xAxis of
@@ -129,7 +129,7 @@ toGroupX xAxis =
                 groupByWorld yAxis
 
 
-toGroupY : YAxis -> Group Event
+toGroupY : YAxis -> Group Label Event
 toGroupY yAxis =
     case yAxis of
         YNone ->
@@ -150,10 +150,6 @@ plot : Spec -> Graph Event () -> Plot
 plot { x, y } graph =
     let
         eventList = toEventList graph
-        loadEventDate evt = Exact ( 1, Jan, 1888 )
-        loadEventPersons evt = []
-        loadEventWorld evt = Adam
-        loadEventSeason evt = ( Season 1, Nothing )
         toWorlds : (List Event -> YAxis) -> ByWorld Event -> ByWorld YAxis
         toWorlds f
             = List.map
@@ -201,27 +197,27 @@ plot { x, y } graph =
                     |> XAll
             ( All, ByDate _ ) ->
                 eventList
-                    |> arrangeByDate loadEventDate
+                    |> arrangeByDate .date
                     |> YByDate
                     |> XAll
             ( All, ByPerson _ ) ->
                 eventList
-                    |> arrangeByPerson loadEventPersons
+                    |> arrangeByPerson Event.getPersons
                     |> YByPerson
                     |> XAll
             ( All, BySeason _ ) ->
                 eventList
-                    |> arrangeBySeason loadEventSeason
+                    |> arrangeBySeason .episode
                     |> YBySeason
                     |> XAll
             ( All, ByWorld _ ) ->
                 eventList
-                    |> arrangeByWorld loadEventWorld
+                    |> arrangeByWorld .world
                     |> YByWorld
                     |> XAll
             ( ByDate _, All ) ->
                 eventList
-                    |> arrangeByDate loadEventDate
+                    |> arrangeByDate .date
                     |> toDates YAll
                     |> XByDate
             ( ByDate _, ByDate filter ) ->
@@ -231,28 +227,28 @@ plot { x, y } graph =
                     graph
             ( ByDate _, ByPerson _ ) ->
                 eventList
-                    |> arrangeByDate loadEventDate
-                    |> toDates (YByPerson << arrangeByPerson loadEventPersons)
+                    |> arrangeByDate .date
+                    |> toDates (YByPerson << arrangeByPerson Event.getPersons)
                     |> XByDate
             ( ByDate _, BySeason _ ) ->
                 eventList
-                    |> arrangeByDate loadEventDate
-                    |> toDates (YBySeason << arrangeBySeason loadEventSeason)
+                    |> arrangeByDate .date
+                    |> toDates (YBySeason << arrangeBySeason .episode)
                     |> XByDate
             ( ByDate _, ByWorld _ ) ->
                 eventList
-                    |> arrangeByDate loadEventDate
-                    |> toDates (YByWorld << arrangeByWorld loadEventWorld)
+                    |> arrangeByDate .date
+                    |> toDates (YByWorld << arrangeByWorld .world)
                     |> XByDate
             ( ByPerson _, All ) ->
                 eventList
-                    |> arrangeByPerson loadEventPersons
+                    |> arrangeByPerson Event.getPersons
                     |> toPersons YAll
                     |> XByPerson
             ( ByPerson _, ByDate _ ) ->
                 eventList
-                    |> arrangeByPerson loadEventPersons
-                    |> toPersons (YByDate << arrangeByDate loadEventDate)
+                    |> arrangeByPerson Event.getPersons
+                    |> toPersons (YByDate << arrangeByDate .date)
                     |> XByPerson
             ( ByPerson _, ByPerson filter ) ->
                 plot
@@ -261,28 +257,28 @@ plot { x, y } graph =
                     graph
             ( ByPerson _, BySeason _ ) ->
                 eventList
-                    |> arrangeByPerson loadEventPersons
-                    |> toPersons (YBySeason << arrangeBySeason loadEventSeason)
+                    |> arrangeByPerson Event.getPersons
+                    |> toPersons (YBySeason << arrangeBySeason .episode)
                     |> XByPerson
             ( ByPerson _, ByWorld _ ) ->
                 eventList
-                    |> arrangeByPerson loadEventPersons
-                    |> toPersons (YByWorld << arrangeByWorld loadEventWorld)
+                    |> arrangeByPerson Event.getPersons
+                    |> toPersons (YByWorld << arrangeByWorld .world)
                     |> XByPerson
             ( BySeason _, All ) ->
                 eventList
-                    |> arrangeBySeason loadEventSeason
+                    |> arrangeBySeason .episode
                     |> toSeasons YAll
                     |> XBySeason
             ( BySeason _, ByDate _ ) ->
                 eventList
-                    |> arrangeBySeason loadEventSeason
-                    |> toSeasons (YByDate << arrangeByDate loadEventDate)
+                    |> arrangeBySeason .episode
+                    |> toSeasons (YByDate << arrangeByDate .date)
                     |> XBySeason
             ( BySeason _, ByPerson _ ) ->
                 eventList
-                    |> arrangeBySeason loadEventSeason
-                    |> toSeasons (YByPerson << arrangeByPerson loadEventPersons)
+                    |> arrangeBySeason .episode
+                    |> toSeasons (YByPerson << arrangeByPerson Event.getPersons)
                     |> XBySeason
             ( BySeason _, BySeason filter ) ->
                 plot
@@ -291,28 +287,28 @@ plot { x, y } graph =
                     graph
             ( BySeason _, ByWorld _ ) ->
                 eventList
-                    |> arrangeBySeason loadEventSeason
-                    |> toSeasons (YByWorld << arrangeByWorld loadEventWorld)
+                    |> arrangeBySeason .episode
+                    |> toSeasons (YByWorld << arrangeByWorld .world)
                     |> XBySeason
             ( ByWorld _, All ) ->
                 eventList
-                    |> arrangeByWorld loadEventWorld
+                    |> arrangeByWorld .world
                     |> toWorlds YAll
                     |> XByWorld
             ( ByWorld _, ByDate _ ) ->
                 eventList
-                    |> arrangeByWorld loadEventWorld
-                    |> toWorlds (YByDate << arrangeByDate loadEventDate)
+                    |> arrangeByWorld .world
+                    |> toWorlds (YByDate << arrangeByDate .date)
                     |> XByWorld
             ( ByWorld _, ByPerson _ ) ->
                 eventList
-                    |> arrangeByWorld loadEventWorld
-                    |> toWorlds (YByPerson << arrangeByPerson loadEventPersons)
+                    |> arrangeByWorld .world
+                    |> toWorlds (YByPerson << arrangeByPerson Event.getPersons)
                     |> XByWorld
             ( ByWorld _, BySeason _ ) ->
                 eventList
-                    |> arrangeByWorld loadEventWorld
-                    |> toWorlds (YBySeason << arrangeBySeason loadEventSeason)
+                    |> arrangeByWorld .world
+                    |> toWorlds (YBySeason << arrangeBySeason .episode)
                     |> XByWorld
             ( ByWorld _, ByWorld filter ) ->
                 plot
@@ -344,7 +340,7 @@ arrangeBySeason extractEpisode =
         List.groupByEquals1
             extractSeason
                 >> List.map
-                    (Tuple.mapSecond2
+                    (Tuple.mapSecondToTuple
                         <| List.groupSplitBy
                             equalEpisodes
                             (extractEpisode >> Tuple.second)
@@ -352,68 +348,59 @@ arrangeBySeason extractEpisode =
 
 
 arrangeByDate : (x -> Event.Date) -> List x -> ByDate x
-arrangeByDate extractDate source =
+arrangeByDate extractDate =
     let
         equalMonths a b = Event.onSameMonth (extractDate a) (extractDate b)
         equalDays a b = Event.onSameDay (extractDate a) (extractDate b)
     in
-        source
-            |> List.groupByEquals1 (extractDate >> getYear)
-            |> List.map
-                (Tuple.mapSecond2
-                    <| List.groupSplitBy
-                            equalMonths
-                            (extractDate >> Event.getMonth)
+        List.groupByEquals1
+            (extractDate >> getYear)
+                >> List.map
+                    (Tuple.mapSecondToTuple
+                        <| List.groupSplitBy
+                                equalMonths
+                                (extractDate >> Event.getMonth)
 
-                        >> Tuple.mapSecond
-                              (List.map
-                                 <| Tuple.mapSecond2
-                                 <| List.groupSplitBy
-                                        equalDays
-                                        (extractDate >> Event.getDay)
-                              )
-                )
+                            >> Tuple.mapSecond
+                                (List.map
+                                    <| Tuple.mapSecondToTuple
+                                    <| List.groupSplitBy
+                                            equalDays
+                                            (extractDate >> Event.getDay)
+                                )
+                    )
 
 
-groupByDate : ByDate x -> Group x
+groupByDate : ByDate x -> Group Label x
 groupByDate _ = Group.None
 
 
-groupByPerson : ByPerson x -> Group x
-groupByPerson _ = Group.None
+groupByPerson : ByPerson x -> Group Label x
+groupByPerson =
+    Nest_ << List.map
+        (\(family, persons) ->
+            persons
+                |> List.map (\(person, xs) -> Some (labelAs <| Person.uniqueName person) xs)
+                |> Nest (labelAs <| Person.familyToLabel family)
+        )
 
 
-groupBySeason : BySeason x -> Group x
-groupBySeason _ = Group.None
+groupBySeason : BySeason x -> Group Label x
+groupBySeason =
+    Nest_ << List.map
+        (\(Season season, noEpisodeItems, episodes) ->
+            Nest
+                (labelAs <| "Season " ++ String.fromInt season)
+                <| Some_ noEpisodeItems
+                    ::  (episodes |> List.map
+                            (\(Episode episode, xs) ->
+                                Some
+                                    (labelAs <| "Episode " ++ String.fromInt episode)
+                                    xs
+                            )
+                        )
+        )
 
 
-groupByWorld : ByWorld x -> Group x
-groupByWorld _ = Group.None
-
-
-{-
-group
-    :  (a -> a -> Bool)
-    -> (a -> Label)
-    -> List a
-    -> Group a
-group compare toLabel items =
-    items
-        |> groupBy compare toLabel
-        |> Group.form_
-
-
-groupEvents : Axis -> List Event -> Group Event
-groupEvents axis events =
-    case axis of
-        None -> emptyGroup
-        All -> Some_ events
-        ByDate filter ->
-            events
-                |> List.filter (.date >> filter)
-                |> group (Event.compareByDate Event.onSameYear) (.date >> yearToLabel >> labelAs)
-                --|> group (Event.compareByDate Event.onSameDay) (.date >> dateToLabel >> labelAs)
-        ByPerson filter -> emptyGroup
-        BySeason filter -> emptyGroup
-        ByWorld filter -> emptyGroup
--}
+groupByWorld : ByWorld x -> Group Label x
+groupByWorld = Group.form_ >> Group.mapKey (worldToLabel >> labelAs)

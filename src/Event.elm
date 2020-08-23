@@ -179,6 +179,15 @@ yearToLabel =
     >> \y -> Date.format "yyyy" <| Date.fromCalendarDate y Jan 1
 
 
+worldToLabel : World -> String
+worldToLabel world =
+    case world of
+        Origin_1 -> "Origin 1"
+        Origin_2 -> "Origin 2"
+        Adam -> "Adam"
+        Eva -> "Eva"
+
+
 getYear : Date -> Year
 getYear date =
     case date of
@@ -201,3 +210,9 @@ getDay date =
         Exact ( d, _, _ ) -> Just d
         Someday _ _ -> Nothing
         Throughout _ -> Nothing
+
+
+getPersons : Event -> List PersonId
+getPersons event =
+    event.participants
+        |> List.map (\(personId, _, _) -> personId)
