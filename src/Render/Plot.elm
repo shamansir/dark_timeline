@@ -372,7 +372,35 @@ arrangeByDate extractDate =
 
 
 groupByDate : ByDate x -> Group Label x
-groupByDate _ = Group.None
+groupByDate =
+    Nest_ << List.map
+        (\(year, noYearItems, months) ->
+
+            Nest
+                (labelAs <| String.fromInt year)
+                <| Some_ noYearItems
+                    ::  (months |> List.map
+                            (\(month, noDayItems, days) ->
+
+                                Nest
+                                    (labelAs
+                                        <| Date.format "MMMM yyyy"
+                                        <| Date.fromCalendarDate year month 1)
+                                    <| Some_ noDayItems
+                                        ::  (days |> List.map
+                                                (\(day, xs) ->
+                                                    Some
+                                                        (labelAs
+                                                            <| Date.format "ddd MMMM, yyyy"
+                                                            <| Date.fromCalendarDate year month day)
+                                                        xs
+                                                )
+                                            )
+
+                            )
+                        )
+
+        )
 
 
 groupByPerson : ByPerson x -> Group Label x
@@ -389,6 +417,7 @@ groupBySeason : BySeason x -> Group Label x
 groupBySeason =
     Nest_ << List.map
         (\(Season season, noEpisodeItems, episodes) ->
+
             Nest
                 (labelAs <| "Season " ++ String.fromInt season)
                 <| Some_ noEpisodeItems
@@ -399,6 +428,7 @@ groupBySeason =
                                     xs
                             )
                         )
+
         )
 
 
