@@ -382,20 +382,36 @@ groupByDate =
                     ::  (months |> List.map
                             (\(month, noDayItems, days) ->
 
-                                Nest
-                                    (labelAs
-                                        <| Date.format "MMMM yyyy"
-                                        <| Date.fromCalendarDate year month 1)
-                                    <| Some_ noDayItems
-                                        ::  (days |> List.map
-                                                (\(day, xs) ->
-                                                    Some
-                                                        (labelAs
-                                                            <| Date.format "ddd MMMM, yyyy"
-                                                            <| Date.fromCalendarDate year month day)
-                                                        xs
+                                if not <| List.isEmpty noDayItems then
+
+                                    Nest
+                                        (labelAs
+                                            <| Date.format "MMMM yyyy"
+                                            <| Date.fromCalendarDate year month 1)
+                                        <| Some_ noDayItems
+                                            ::  (days |> List.map
+                                                    (\(day, xs) ->
+                                                        Some
+                                                            (labelAs
+                                                                <| Date.format "ddd MMMM, yyyy"
+                                                                <| Date.fromCalendarDate year month day)
+                                                            xs
+                                                    )
                                                 )
-                                            )
+
+                                else
+
+                                    Nest_
+                                        <| Some_ noDayItems
+                                            ::  (days |> List.map
+                                                    (\(day, xs) ->
+                                                        Some
+                                                            (labelAs
+                                                                <| Date.format "ddd MMMM, yyyy"
+                                                                <| Date.fromCalendarDate year month day)
+                                                            xs
+                                                    )
+                                                )
 
                             )
                         )
