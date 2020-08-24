@@ -74,7 +74,6 @@ distribute direction renderItem items =
     case direction of
         Vertical ->
             let
-                horzMargin = 5
                 vertMargin = 10
                 renderedItems = items |> List.map renderItem
                 totalWidth =
@@ -99,7 +98,30 @@ distribute direction renderItem items =
                     |> S.g []
                     |> sized totalWidth totalHeight
         Horizontal ->
-            S.g [] [] |> noSize -- TODO:
+            let
+                horzMargin = 10
+                renderedItems = items |> List.map renderItem
+                totalHeight =
+                    renderedItems
+                        |> List.map (Tuple.first >> .height)
+                        |> List.maximum
+                        |> Maybe.withDefault 0
+                ( totalWidth, withTransforms )
+                    = renderedItems
+                        |> mapAccum
+                            (\({ width }, item ) prev ->
+                                let
+                                    shift = prev + width + horzMargin
+                                in
+                                    ( shift
+                                    , S.g [ SA.style <| translate prev 0 ] [ item ]
+                                    )
+                            )
+                            horzMargin
+            in
+                withTransforms
+                    |> S.g []
+                    |> sized totalWidth totalHeight
 
 
 view
@@ -109,6 +131,7 @@ view
     -> Sized (S.Svg Msg)
 view direction renderItem group =
     case ( direction, group ) of
+
         ( Vertical, Some label items ) ->
 
             items
@@ -135,6 +158,28 @@ view direction renderItem group =
 
             S.g [] [] |> noSize
 
-        ( Horizontal, _ ) ->
+        ( Horizontal, Some label items ) ->
 
-            view Vertical renderItem group
+            items
+                |> distribute Horizontal renderItem
+                |> Label.add label
+
+        ( Horizontal, Some_ items ) ->
+
+            items
+                |> distribute Horizontal renderItem
+
+        ( Horizontal, Nest label nestedGroups ) ->
+
+            nestedGroups
+                 |> distribute Horizontal (view Horizontal renderItem)
+                 |> Label.add label
+
+        ( Horizontal, Nest_ nestedGroups ) ->
+
+            nestedGroups
+               |> distribute Horizontal (view Horizontal renderItem)
+
+        ( Horizontal, None ) ->
+
+            S.g [] [] |> noSize
