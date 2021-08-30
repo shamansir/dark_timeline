@@ -151,7 +151,8 @@ groupSplitBy comparator convertToMaybe =
                         case maybeMarker of
                             Just marker -> Just ( marker, item )
                             Nothing -> Nothing
-                    ))
+                    )
+            )
 
 
 groupSplitByEquals : (a -> Maybe b) -> List a -> ( List a, List ( b, List a ) )

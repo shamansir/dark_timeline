@@ -5,7 +5,50 @@ import Person exposing (..)
 import Event exposing (World(..))
 
 
-type alias Relationship =
+type Relationship
+    = Father
+    | Mother
+    | Child
+    | AdoptFather
+    | AdoptMother
+    | Affection
+
+
+type alias Fact = ( PersonId, Relationship, PersonId )
+
+
+type alias WorldRelationships = ( World, List Fact )
+
+
+type alias Relationships = List WorldRelationships
+
+
+
+fatherTo = Father
+
+
+motherTo = Mother
+
+
+childOf = Child
+
+
+adoptFatherTo = AdoptFather
+
+
+adoptMotherTo = AdoptMother
+
+
+affectedTo = Affection
+
+
+
+fact : PersonId -> Relationship -> PersonId -> Fact
+fact from rel to = ( from, rel, to )
+
+
+
+{- type alias Relationship =
     { father : Maybe PersonId
     , mother : Maybe PersonId
     , children : List PersonId
@@ -67,3 +110,4 @@ in_ = Tuple.pair
 
 allIn : World -> List Relationship -> List BoundRelationship
 allIn = List.map << in_
+-}
