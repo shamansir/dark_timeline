@@ -65,6 +65,65 @@ type PersonId
     | Jana
 
 
+
+{- allPersons : List PersonId
+allPersons =
+    [ Unknown
+    , Jonas
+    , Martha
+    , Martha_2
+    , Martha_3
+    , Bartosz
+    , Bartosz_2
+    , Franziska
+    , Magnus
+    , Gustav
+    , Silja
+    , Hanno_Noah
+    , Agnes
+    , Hannah
+    , Claudia
+    , Claudia_2
+    , Claudia_3
+    , Helge
+    , Ulrich
+    , Yasin
+    , Erik
+    , Egon
+    , Tronte
+    , Doris
+    , Gretchen
+    , Bernd
+    , HGTannhaus
+    , Katharina
+    , Helene
+    , Obendorf -- Fran? Obendorf
+    , Marek
+    , Sonja
+    , Charlotte
+    , Mikkel
+    , Ines
+    , Boris_Aleksander
+    , Regina
+    , Mads
+    , Heinrich
+    , Leopold
+    , Killian
+    , Jurgen
+    , Ulla
+    , Benjamin
+    , Peter
+    , Benni
+    , Torben
+    , Clausen
+    , Elisabeth
+    -- below were not met before
+    , Bernandette
+    , Daniel
+    , Jana
+    ] -}
+
+
 type Family
     = Tannhaus
     -- | etc.

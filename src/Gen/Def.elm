@@ -4,6 +4,11 @@ module Gen.Def exposing (..)
 import Person exposing (..)
 import Event exposing (World(..))
 
+import List.Unique as UniqueList exposing (filterDuplicates)
+
+import Graph exposing (Graph)
+import Graph as Graph
+
 
 type Relationship
     = Father
@@ -47,67 +52,35 @@ fact : PersonId -> Relationship -> PersonId -> Fact
 fact from rel to = ( from, rel, to )
 
 
-
-{- type alias Relationship =
-    { father : Maybe PersonId
-    , mother : Maybe PersonId
-    , children : List PersonId
-    }
+participantsOf : Fact -> ( PersonId, PersonId )
+participantsOf ( from, _, to ) = ( from, to )
 
 
-type alias BoundRelationship = ( World, Relationship )
+-- relationshipsFor : World -> Relationsips
 
 
-type alias Tree = List BoundRelationship
 
-
-childOf : PersonId -> ( PersonId, PersonId ) -> Relationship
-childOf child = family [ child ]
-
-
-family : List PersonId -> ( PersonId, PersonId ) -> Relationship
-family children ( father, mother ) =
-    { father = Just father
-    , mother = Just mother
-    , children = children
-    }
-
-
-fatherIs : PersonId -> PersonId -> Relationship
-fatherIs child father =
-    { father = Just father
-    , mother = Nothing
-    , children = [ child ]
-    }
-
-
-motherIs : PersonId -> PersonId -> Relationship
-motherIs child mother =
-    { father = Nothing
-    , mother = Just mother
-    , children = [ child ]
-    }
-
-
-brothers : PersonId -> PersonId -> Relationship
-brothers brotherOne brotherTwo =
-    { father = Nothing
-    , mother = Nothing
-    , children = [ brotherOne, brotherTwo]
-    }
-
-
-addChild : PersonId -> Relationship -> Relationship
-addChild child relationship =
-    { relationship
-    | children = child :: relationship.children
-    }
-
-
-in_ : World -> Relationship -> BoundRelationship
-in_ = Tuple.pair
-
-
-allIn : World -> List Relationship -> List BoundRelationship
-allIn = List.map << in_
--}
+toGraph : WorldRelationships -> Graph PersonId Relationship
+toGraph (_, facts) =
+    let
+        uniquePersons =
+            List.map participantsOf facts
+                |> List.foldl (\(p1, p2) list -> p1 :: p2 :: list) []
+                |> UniqueList.filterDuplicates
+        indexedUniquePersons =
+            uniquePersons
+                |> List.indexedMap Tuple.pair
+        indexOf person =
+            indexedUniquePersons
+                |> List.filterMap (\(idx, otherPerson) -> if otherPerson == person then Just idx else Nothing)
+                |> List.head
+        toNode (idx, person) = Graph.Node idx person
+        toEdge (personA, rel, personB) =
+            Graph.Edge
+                (indexOf personA |> Maybe.withDefault -1)
+                (indexOf personB |> Maybe.withDefault -1)
+                rel
+    in
+        Graph.fromNodesAndEdges
+            (indexedUniquePersons |> List.map toNode)
+            (facts |> List.map toEdge)

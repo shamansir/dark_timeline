@@ -6,7 +6,9 @@ import Event exposing (World(..))
 import Gen.Def exposing (..)
 
 
--- family
+relationships : Relationships
+relationships =
+    [ adam, eva, origin ]
 
 
 adam : WorldRelationships
@@ -144,6 +146,35 @@ eva =
         --, fact Jana affectedTo Tronte
 
         , fact Martha motherTo Unknown
+
+        ]
+    )
+
+
+origin =
+    ( Origin_2
+    ,
+        [ fact HGTannhaus fatherTo Marek
+
+        , fact Marek fatherTo Charlotte
+        , fact Sonja motherTo Charlotte
+
+        , fact Bernd adoptFatherTo Helge
+        , fact Gretchen adoptMotherTo Helge
+
+        , fact Helge fatherTo Peter
+
+        , fact Peter fatherTo Benjamin
+
+        , fact Torben fatherTo Jonas
+        , fact Hannah motherTo Jonas
+
+        , fact Egon fatherTo Claudia
+        , fact Doris motherTo Claudia
+
+        , fact Claudia motherTo Regina
+
+        , fact Helene motherTo Katharina
 
         ]
     )
