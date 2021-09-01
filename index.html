@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Dark timeline</title>
+  <!-- <link rel="stylesheet" href="whatever-you-want.css"> -->
+  <script src="./viz/viz.js"></script>
+  <!-- <script src="./viz/full.render.js"></script> -->
+  <script src="app.js"></script>
+  <style>
+    #links { margin: 10px; position: fixed; right: 0; top: 0 }
+    #links a {background-color: powderblue; margin: 0 10px; padding: 1px 4px; border-radius: 3px; color: black;}
+    </style>
+</head>
+<body>
+  <div id="app-target"></div>
+  <script>
+    const workerURL = './viz/full.render.js';
+    let viz = new Viz({ workerURL });
+
+
+    var app = Elm.Main.init({ node: document.getElementById("app-target") });
+
+    app.ports.viewGraph.subscribe(({ parentEl, targetEl, graphStr }) => {
+
+      viz.renderSVGElement(graphStr)
+      .then(function(element) {
+        document.getElementById(parentEl).innerHTML = '';
+        document.getElementById(parentEl).appendChild(element);
+      })
+      .catch(error => {
+        // Create a new Viz instance (@see Caveats page for more info)
+        viz = new Viz({ workerURL });
+
+        // Possibly display the error
+        console.error(error);
+      });
+
+    });
+  </script>
+</body>
+</html>
