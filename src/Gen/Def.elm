@@ -59,6 +59,17 @@ participantsOf ( from, _, to ) = ( from, to )
 -- relationshipsFor : World -> Relationsips
 
 
+relToString : Relationship -> String
+relToString rel =
+    case rel of
+        Father -> "father"
+        Mother -> "mother"
+        Child -> "child"
+        AdoptFather -> "adopt-father"
+        AdoptMother -> "adopt-mother"
+        Affection -> "affection"
+
+
 
 toGraph : WorldRelationships -> Graph PersonId Relationship
 toGraph (_, facts) =

@@ -38,6 +38,7 @@ adam =
         --, fact Doris affectedTo Egon
 
         , fact Claudia motherTo Regina
+        , fact {- maybe -} Bernd fatherTo Regina
         , fact Regina motherTo Bartosz
         , fact Boris_Aleksander fatherTo Bartosz
         --, fact Boris_Aleksander affectedTo Regina
@@ -112,6 +113,7 @@ eva =
         --, fact Doris affectedTo Egon
 
         , fact Claudia motherTo Regina
+        , fact {- maybe -} Bernd fatherTo Regina
         , fact Regina motherTo Bartosz
         , fact Boris_Aleksander fatherTo Bartosz
         --, fact Boris_Aleksander affectedTo Regina
