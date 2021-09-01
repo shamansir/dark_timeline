@@ -6,7 +6,7 @@ import Event exposing (World(..))
 
 import List.Unique as UniqueList exposing (filterDuplicates)
 
-import Graph exposing (Graph)
+import Graph as G exposing (Graph)
 import Graph as Graph
 
 
@@ -27,6 +27,8 @@ type alias WorldRelationships = ( World, List Fact )
 
 type alias Relationships = List WorldRelationships
 
+
+type alias Graph = G.Graph PersonId Relationship
 
 
 fatherTo = Father
@@ -71,7 +73,7 @@ relToString rel =
 
 
 
-toGraph : WorldRelationships -> Graph PersonId Relationship
+toGraph : WorldRelationships -> Graph
 toGraph (_, facts) =
     let
         uniquePersons =

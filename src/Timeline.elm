@@ -1,7 +1,8 @@
-module Timeline exposing (Timeline, timeline)
+module Timeline exposing (Timeline, timeline, Graph)
 
 
 import Event exposing (Event)
+import Graph as G
 
 
 import Timeline.Y1888 exposing (y1888)
@@ -26,6 +27,9 @@ import Timeline.Y2053 exposing (y2053)
 
 
 type alias Timeline = List Event
+
+
+type alias Graph = G.Graph Event ()
 
 
 timeline : Timeline
